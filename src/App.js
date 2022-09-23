@@ -1,27 +1,30 @@
 import './App.css';
 import './index.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Query, client } from '@tilework/opus';
 
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
+  const [currencies, setCurrencies] = useState([]);
 
   const handleChange = (newActiveTab) => {
         setActiveTab(newActiveTab);
         console.log(newActiveTab)
     }
 
-  // async function fetchData() {
-  // client.setEndpoint('http://localhost:4000/')
-  // const query = new Query('categories', true)
-  //   .addFieldList(['name']);
-  
-  //   const result = await client.post(query);
-  //   console.log(result)
-  // }
-  
-  // fetchData()
+    useEffect(() => {
+    const fetchData = (async() => {
+      client.setEndpoint('http://localhost:4000/')
+      const query = new Query('currencies', true)
+        .addFieldList(['label', 'symbol']);
+    
+      const result = await client.post(query);
+      setCurrencies(result.currencies)
+      console.log(result)
+    });
+    fetchData()
+}, []);
 
   return (
     <div className="App">
@@ -52,7 +55,16 @@ function App() {
             </svg>
           </div>
           <div className="section-right">
-            $
+            <div className="currencies-container">
+              {currencies?.map((currency, index) => (
+                  <div key={index} className="currency-div">
+                    <div className="symbol"></div>
+                      <p>{currency.symbol}</p>
+                    <div className="label"></div>
+                      <p>{currency.label}</p>
+                  </div>
+              ))}
+            </div>
             <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 0.5L4 3.5L7 0.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
