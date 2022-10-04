@@ -11,9 +11,9 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
         const fetchData = (async() => {
             client.setEndpoint('http://localhost:4000/')
             const query = new Query('currencies', true)
-            .addFieldList(['label', 'symbol']);
+            .addFieldList(['label', 'symbol'])
             
-            const result = await client.post(query);
+            const result = await client.post(query)
             setCurrencies(result.currencies)
             console.log(result)
         });

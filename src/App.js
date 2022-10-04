@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
-  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    const fetchData = (async() => {
+      client.setEndpoint('http://localhost:4000/')
+      .addArgument('input')
 
   const handleChange = (newActiveTab) => {
         setActiveTab(newActiveTab);
