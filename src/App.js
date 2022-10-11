@@ -2,20 +2,34 @@ import './App.css';
 import './index.css';
 import Currencies from "./Currencies";
 import { useState, useEffect } from "react";
+import { Query, client, Field } from '@tilework/opus';
 
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
     const fetchData = (async() => {
       client.setEndpoint('http://localhost:4000/')
-      .addArgument('input')
+      const query = new Query('category', true)
+      .addArgument('input', 'CategoryInput', {title: 'clothes'})
+      .addField(new Field('products')
+        .addFieldList(['name', 'inStock'])
+      )
+
+      const result = await client.post(query)
+      setActiveCategory(result.category)
+    })
+    fetchData()
+  }, [])
+  
 
   const handleChange = (newActiveTab) => {
-        setActiveTab(newActiveTab);
-        console.log(newActiveTab)
+    setActiveTab(newActiveTab);
+    console.log(newActiveTab)
   }
+
 
   return (
     <div className="App">
@@ -55,6 +69,13 @@ function App() {
           </div>
         </nav>
       </header>
+      <main>
+        {activeCategory?.products?.map((category) => (
+          <div className="product-name">
+            <p>{category.name}</p>
+          </div>
+        ))}
+      </main>
     </div>
   );
 }
