@@ -13,10 +13,18 @@ function App() {
     const fetchData = (async() => {
       client.setEndpoint('http://localhost:4000/')
       const query = new Query('category', true)
-      .addArgument('input', 'CategoryInput', {title: 'clothes'})
+      .addArgument('input', 'CategoryInput', { title: 'clothes' })
       .addField(new Field('products')
-        .addFieldList(['name', 'inStock'])
+          .addFieldList(['name', 'inStock', 'gallery', 'description', 'category', 'brand'])
+          .addField(new Field('prices')
+          .addArgument('filter', { currency: { label: 'USD' }})
+              .addFieldList(['amount'])
+              .addField(new Field('currency')
+                  .addFieldList(['label', 'symbol'])
+              )
+          )
       )
+      
 
       const result = await client.post(query)
       setActiveCategory(result.category)
@@ -70,9 +78,17 @@ function App() {
         </nav>
       </header>
       <main>
-        {activeCategory?.products?.map((category) => (
-          <div className="product-name">
-            <p>{category.name}</p>
+        {activeCategory?.products?.map((product, index) => (
+          <div key={index} className="product-name">
+            <p>{product.name}</p>
+            <p>{product.inStock}</p>
+            <p>{product.gallery}</p>
+            <p>{product.description}</p>
+            <p>{product.product}</p>
+            <p>{product.prices[0].currency.symbol}</p>
+            <p>{product.prices[0].currency.label}</p>
+            <p>{product.prices[0].amount}</p>
+            <p>{product.brand}</p>
           </div>
         ))}
       </main>

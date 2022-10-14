@@ -65,6 +65,7 @@ nav .section-right {
 
 .currencies-container {
   animation: slideDown ease 255ms;
+  background: white;
 }
 
 @keyframes slideDown {
