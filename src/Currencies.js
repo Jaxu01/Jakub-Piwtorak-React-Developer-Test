@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Query, client } from '@tilework/opus';
+import GlobalContext from "./GlobalContext";
 
 
 function Currencies() {
-const [currencies, setCurrencies] = useState([]);
-const [activeCurrency, setActiveCurrency] = useState({symbol : "$"});
-const [dropdownOpen, setDropdownOpen] = useState(false);
+const [state, setState] = useState({
+    currencies: [],
+    activeCurrency: {symbol : "$"},
+    dropdownOpen: false
+});
 
     useEffect(() => {
         const fetchData = (async() => {
@@ -14,22 +17,26 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
             .addFieldList(['label', 'symbol'])
             
             const result = await client.post(query)
-            setCurrencies(result.currencies)
-            console.log(result)
+            setState({...state, currencies: result.currencies})
         });
         fetchData()
-        setDropdownOpen(false)
     }, []);
+    const handleDropdownOpen = () => {
+        setState((prev) => {
+            return {...state, dropdownOpen: !prev.dropdownOpen}
+        })
+    }
+
 
     return (
         <>
             <div className="default-currency">
-                {activeCurrency && <Currency activeCurrency={activeCurrency} />}
+                {state.activeCurrency && <Currency activeCurrency={state.activeCurrency} />}
             </div>
             <div className="section-right-currencies">
-                {dropdownOpen && <Dropdown currencies={currencies} setActiveCurrency={setActiveCurrency} />}
+                {state.dropdownOpen && <Dropdown currenciesState={state} setCurrenciesState={setState}/>}
             </div>
-            <svg onClick={() => setDropdownOpen((prev) => !prev)} width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg onClick={handleDropdownOpen} width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 0.5L4 3.5L7 0.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </>
@@ -44,11 +51,16 @@ function Currency({activeCurrency}) {
     )
 }
 
-function Dropdown({setActiveCurrency, currencies}) {
+function Dropdown({setCurrenciesState, currenciesState}) {
+    const global = useContext(GlobalContext);
+    const handleCurrencyUpdate = (currency) => {
+        global.updateCurrency(currency.label)
+        setCurrenciesState({...currenciesState, activeCurrency: currency, dropdownOpen: false}) 
+    }
     return (
         <div className="currencies-container">
-            {currencies?.map((currency, index) => (
-                <div key={index} onClick={() => setActiveCurrency(currency)} className="currency-div">
+            {currenciesState.currencies?.map((currency, index) => (
+                <div key={index} onClick={() => handleCurrencyUpdate(currency)} className="currency-div">
                     <p>{currency.symbol}</p>
                     <p>{currency.label}</p>
                 </div>

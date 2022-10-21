@@ -106,3 +106,27 @@ svg {
   height: 24px;
 }
 
+main {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  margin: 0 auto;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.product-name img {
+  width: 100%;
+  height: fit-content;
+  object-fit: cover;
+  object-position: top;
+}
+
+main > * {
+  min-width: 0px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 300px;
+}
