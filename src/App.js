@@ -2,7 +2,7 @@ import './index.css';
 import Currencies from "./Currencies";
 import { useState, useEffect } from "react";
 import { Query, client, Field } from '@tilework/opus';
-import GlobalContext from "./GlobalContext";
+import { GlobalContext, useGeneral, GeneralProvider } from "./GeneralContext";
 
 
 function App() {
@@ -10,6 +10,9 @@ function App() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [currency, setCurrency] = useState('USD');
   console.log(currency)
+
+const general = useGeneral()
+console.log(general)
 
   useEffect(() => {
     const fetchData = (async() => {
@@ -35,10 +38,6 @@ function App() {
     console.log("hello")
   }, [setCurrency])
 
-  const updateCurrency = (currency) => {
-    setCurrency(currency)
-  }
-
   const handleChange = (newActiveTab) => {
     setActiveTab(newActiveTab);
     console.log(newActiveTab)
@@ -46,7 +45,7 @@ function App() {
 
 
   return (
-    <GlobalContext.Provider value={{updateCurrency: updateCurrency}}>
+    <GeneralProvider>
       <div className="App">
         <header className="desktop">
           <nav className="navigation">
@@ -95,7 +94,7 @@ function App() {
           ))}
         </main>
       </div>
-    </GlobalContext.Provider>
+    </GeneralProvider>
   );
 }
 

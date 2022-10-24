@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Query, client } from '@tilework/opus';
-import GlobalContext from "./GlobalContext";
+import { useGeneral, useGeneralUpdate } from "./GeneralContext";
 
 
 function Currencies() {
@@ -52,15 +52,18 @@ function Currency({activeCurrency}) {
 }
 
 function Dropdown({setCurrenciesState, currenciesState}) {
-    const global = useContext(GlobalContext);
-    const handleCurrencyUpdate = (currency) => {
-        global.updateCurrency(currency.label)
-        setCurrenciesState({...currenciesState, activeCurrency: currency, dropdownOpen: false}) 
-    }
+    // const general = useContext(GeneralContext);
+    // const handleCurrencyUpdate = (currency) => {
+    //     general.updateCurrency(currency.label)
+    //     setCurrenciesState({...currenciesState, activeCurrency: currency, dropdownOpen: false})
+    const generalUpdate = useGeneralUpdate()
+    const general = useGeneral()
+    console.log(general)
+    // }
     return (
         <div className="currencies-container">
             {currenciesState.currencies?.map((currency, index) => (
-                <div key={index} onClick={() => handleCurrencyUpdate(currency)} className="currency-div">
+                <div key={index} onClick={() => generalUpdate({currency})} className="currency-div">
                     <p>{currency.symbol}</p>
                     <p>{currency.label}</p>
                 </div>
