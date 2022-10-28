@@ -12,11 +12,10 @@ export function GeneralProvider({ children }) {
         activeCurrency: {symbol : "$"}
     })
     function updateGeneral(obj) {
-        console.log(obj)
         setState({...state, ...obj})
     }
     return (
-        <GeneralContext.Provider value={setState}>
+        <GeneralContext.Provider value={state}>
             <GeneralUpdateContext.Provider value={updateGeneral}>
                 {children}
             </GeneralUpdateContext.Provider>

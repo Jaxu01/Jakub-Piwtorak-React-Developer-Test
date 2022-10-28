@@ -3,7 +3,7 @@ import { Query, client } from '@tilework/opus';
 import { useGeneral, useGeneralUpdate } from "./GeneralContext";
 
 
-function Currencies() {
+function Currencies({setCurrency}) {
 const [state, setState] = useState({
     currencies: [],
     activeCurrency: {symbol : "$"},
@@ -27,48 +27,31 @@ const [state, setState] = useState({
         })
     }
 
-
     return (
         <>
             <div className="default-currency">
-                {state.activeCurrency && <Currency activeCurrency={state.activeCurrency} />}
+                {state.activeCurrency && (
+                    <div className="active-currency">
+                        <p>{state.activeCurrency.symbol}</p>
+                    </div>
+                )}
             </div>
             <div className="section-right-currencies">
-                {state.dropdownOpen && <Dropdown currenciesState={state} setCurrenciesState={setState}/>}
+                {state.dropdownOpen && (
+                    <div className="currencies-container">
+                        {state.currencies?.map((currency, index) => (
+                            <div key={index} onClick={() => setCurrency(currency.label)} className="currency-div">
+                                <p>{currency.symbol}</p>
+                                <p>{currency.label}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <svg onClick={handleDropdownOpen} width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 0.5L4 3.5L7 0.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </>
-    )
-}
-
-function Currency({activeCurrency}) {
-    return (
-        <div className="active-currency">
-            <p>{activeCurrency.symbol}</p>
-        </div>
-    )
-}
-
-function Dropdown({setCurrenciesState, currenciesState}) {
-    // const general = useContext(GeneralContext);
-    // const handleCurrencyUpdate = (currency) => {
-    //     general.updateCurrency(currency.label)
-    //     setCurrenciesState({...currenciesState, activeCurrency: currency, dropdownOpen: false})
-    const generalUpdate = useGeneralUpdate()
-    const general = useGeneral()
-    console.log(general)
-    // }
-    return (
-        <div className="currencies-container">
-            {currenciesState.currencies?.map((currency, index) => (
-                <div key={index} onClick={() => generalUpdate({currency})} className="currency-div">
-                    <p>{currency.symbol}</p>
-                    <p>{currency.label}</p>
-                </div>
-            ))}
-        </div>
     )
 }
 
