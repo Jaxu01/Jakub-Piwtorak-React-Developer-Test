@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Query, client } from '@tilework/opus';
-import { useGeneral, useGeneralUpdate } from "./GeneralContext";
 
 
-function Currencies({setCurrency}) {
+function Currencies({activeCurrency, setCurrency}) {
 const [state, setState] = useState({
     currencies: [],
-    activeCurrency: {symbol : "$"},
     dropdownOpen: false
 });
 
@@ -30,9 +28,9 @@ const [state, setState] = useState({
     return (
         <>
             <div className="default-currency">
-                {state.activeCurrency && (
+                {activeCurrency && (
                     <div className="active-currency">
-                        <p>{state.activeCurrency.symbol}</p>
+                        <p>{activeCurrency.symbol}</p>
                     </div>
                 )}
             </div>
@@ -40,7 +38,7 @@ const [state, setState] = useState({
                 {state.dropdownOpen && (
                     <div className="currencies-container">
                         {state.currencies?.map((currency, index) => (
-                            <div key={index} onClick={() => setCurrency(currency.label)} className="currency-div">
+                            <div key={index} onClick={() => setCurrency(currency)} className="currency-div">
                                 <p>{currency.symbol}</p>
                                 <p>{currency.label}</p>
                             </div>
