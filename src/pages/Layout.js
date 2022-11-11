@@ -11,7 +11,6 @@ function Layout() {
     setCurrency(currency)
     }
 
-    console.log(activeCategory)
     const handleChange = (newActiveTab) => {
         setActiveTab(newActiveTab);
     }
@@ -54,7 +53,7 @@ function Layout() {
             </div>
             </nav>
         </header>
-        <Outlet context={[ currency, setCurrency]}/>
+        <Outlet context={ currency }/>
         </div>
     )
 }
