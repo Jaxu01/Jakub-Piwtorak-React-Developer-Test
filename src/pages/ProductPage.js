@@ -9,18 +9,20 @@ const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams()
     const fetchData = async() => {
-        client.setEndpoint('http://localhost:4000/')
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)
-            .addFieldList(['name', 'gallery'])
+        .addFieldList(['name', 'gallery', 'description', 'brand'])
         .addField(new Field('prices')
             .addFieldList(['amount'])
-        .addField(new Field('currency')
-            .addFieldList(['symbol', 'label'])
+        )
+        .addField(new Field('attributes')
+            .addFieldList(['id', 'name', 'type'])
+            .addField(new Field('items')
+                .addFieldList(['displayValue', 'value', 'id']) 
             )
         )
-        const product = await client.post(query)
-        setData(product.product)
+        const {product} = await client.post(query)
+        setData(product)
     }
     console.log(data)
     
@@ -31,11 +33,16 @@ const ProductPage = () => {
     }, [])
     return (
         <>
-            {data && (<div>{data.name}
-            {data.gallery.map(image => (
-                <img src={image}/>
-            ))
-            }</div>)}
+            {data && (
+                <div className="product-view">
+                    {data.gallery.map(image => (
+                        <img className="images" src={image}/>
+                        ))}
+                    <h1>{data.brand}</h1>
+                    <h2>{data.name}</h2>
+                    <p>{data.activePrice.symbol}{data.activePrice.amount}</p>
+                </div>
+            )}
         </>
         )
     }

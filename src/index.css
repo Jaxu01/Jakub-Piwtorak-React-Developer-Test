@@ -130,3 +130,12 @@ img {
   max-width: 100%;
   max-height: 300px;
 }
+
+.images {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  margin: 0 auto;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
