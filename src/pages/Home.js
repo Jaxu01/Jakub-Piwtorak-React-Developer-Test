@@ -48,7 +48,7 @@ function Home() {
 
   return (
       <div className="App">
-        <main>
+        <main className="product-list">
           {activeCategory?.products?.map((product, index) => (
             <Link to={product.id} key={index} className="product-name">
               <img src={product.gallery[0]}></img>

@@ -1,0 +1,14 @@
+.product-view {
+    display: grid;
+    grid-template-columns: 1fr 5fr 2fr;
+}
+  
+  .product-view .images {
+    display: grid;
+    grid-column: 1/1;
+    padding: 10px;
+}
+  
+  .product-view .product-info {
+    padding: 10px;
+}

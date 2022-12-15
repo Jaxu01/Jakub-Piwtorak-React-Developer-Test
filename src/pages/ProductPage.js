@@ -1,19 +1,24 @@
 import { useParams } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
 import { useState, useEffect } from "react";
-
+import { useOutletContext, Link } from "react-router-dom";
+import '../productpage.css'
 
 
 //{productId: 'jacket-canada-goosee'}
 const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams()
+    const currency = useOutletContext();
     const fetchData = async() => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)
         .addFieldList(['name', 'gallery', 'description', 'brand'])
         .addField(new Field('prices')
             .addFieldList(['amount'])
+            .addField(new Field('currency')
+                .addFieldList(['label', 'symbol'])
+            )
         )
         .addField(new Field('attributes')
             .addFieldList(['id', 'name', 'type'])
@@ -22,7 +27,8 @@ const ProductPage = () => {
             )
         )
         const {product} = await client.post(query)
-        setData(product)
+        const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
+        setData({...Object(product), activePrice})
     }
     console.log(data)
     
@@ -31,16 +37,26 @@ const ProductPage = () => {
             await fetchData()
         })()
     }, [])
+    console.log(data)
+
     return (
         <>
             {data && (
                 <div className="product-view">
-                    {data.gallery.map(image => (
-                        <img className="images" src={image}/>
+                    <div className="thumbnails">
+                        {data.gallery.map(image => (
+                            <img className="images" src={image}/>
                         ))}
-                    <h1>{data.brand}</h1>
-                    <h2>{data.name}</h2>
-                    <p>{data.activePrice.symbol}{data.activePrice.amount}</p>
+                    </div>
+                    <div className="featured-picture">
+                        <img src={data.gallery[0]}/>
+                    </div>
+                    <div className="product-info">
+                        <h1>{data.brand}</h1>
+                        <h2>{data.name}</h2>
+                        <p>{data.activePrice.symbol}{data.activePrice.amount}</p>
+                        <p>{data.description}</p>
+                    </div>
                 </div>
             )}
         </>
