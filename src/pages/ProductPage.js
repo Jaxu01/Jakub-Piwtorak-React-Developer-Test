@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 import '../productpage.css'
 
+const parser = new DOMParser();
 
-//{productId: 'jacket-canada-goosee'}
 const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams()
@@ -54,8 +54,10 @@ const ProductPage = () => {
                     <div className="product-info">
                         <h1>{data.brand}</h1>
                         <h2>{data.name}</h2>
-                        <p>{data.activePrice.symbol}{data.activePrice.amount}</p>
-                        <p>{data.description}</p>
+                        <h3>{data.attributes.size}</h3>
+                        <p>PRICE:</p>
+                        <h4>{data.activePrice.symbol}{data.activePrice.amount}</h4>
+                        <div dangerouslySetInnerHTML={{__html: data.description}}/>
                     </div>
                 </div>
             )}
