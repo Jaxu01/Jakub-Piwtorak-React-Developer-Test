@@ -54,9 +54,16 @@ const ProductPage = () => {
                     <div className="product-info">
                         <h1>{data.brand}</h1>
                         <h2>{data.name}</h2>
-                        <h3>{data.attributes.size}</h3>
+                        <h3>{data.attributes.map(function (attribute) {
+                            return (
+                                <p>{attribute.name}</p>
+                            )
+                        })}</h3>
                         <p>PRICE:</p>
                         <h4>{data.activePrice.symbol}{data.activePrice.amount}</h4>
+                        <div className="cart-adding">
+                            <button>ADD TO CART</button>
+                        </div>
                         <div dangerouslySetInnerHTML={{__html: data.description}}/>
                     </div>
                 </div>

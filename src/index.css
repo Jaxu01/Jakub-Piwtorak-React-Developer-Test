@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Raleway';
+  src: url(./Raleway-SemiBold.ttf) format('truetype');
+ }
+
 body {
   margin: 0;
   font-family: sans-serif;

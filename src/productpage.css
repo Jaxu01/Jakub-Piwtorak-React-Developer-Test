@@ -4,18 +4,18 @@
   font-family: 'Raleway';
   max-width: 1200px;
   margin: 0 auto;
+  grid-gap: 20px;
 }
   
 .product-view .images {
   display: grid;
   grid-column: 1/1;
-  padding: 10px;
 }
   
 .product-view .product-info {
-  padding: 10px;
   margin-top: 80px;
   margin-bottom: 80px;
+  padding: 0 100px 0 0;
 }
 
 .featured-picture {
@@ -55,4 +55,16 @@
 .thumbnails {
   width: 80px;
   height: 80px;
+  margin-left: 100px;
+}
+
+.cart-adding button {
+  width: 290px;
+  height: 50px;
+  padding: 16px 32px;
+  font-size: 16px;
+  color: #FFFFFF;
+  background: #5ECE7B;
+  cursor: pointer;
+  border: none;
 }
