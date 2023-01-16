@@ -56,7 +56,20 @@ const ProductPage = () => {
                         <h2>{data.name}</h2>
                         <h3>{data.attributes.map(function (attribute) {
                             return (
-                                <p>{attribute.name}</p>
+                                <p>{attribute.name}
+                                    {attribute.items.map(function (item) {
+                                        return (
+                                            <>
+                                                <label htmlFor={item.id}> 
+                                                    <input value={item.value} id={item.id} name={attribute.name} type="radio"/>
+                                                        <div className="radio-tile">
+                                                            {item.displayValue}
+                                                        </div>
+                                                </label>
+                                            </>
+                                        )
+                                    })}
+                                </p>
                             )
                         })}</h3>
                         <p>PRICE:</p>

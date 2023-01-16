@@ -148,3 +148,23 @@ img {
   gap: 8px;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
+label {
+  position: relative;
+  display: inline-block;
+}
+
+label input {
+  position: absolute;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.radio-tile {
+  padding: 10px;
+}
+
+label input:checked + .radio-tile {
+  background: red;
+}
