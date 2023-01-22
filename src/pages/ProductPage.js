@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
 import { useState, useEffect } from "react";
-import { useOutletContext, Link } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+import ProductGallery from '../components/ProductGallery.js'
 import '../productpage.css'
 
 const parser = new DOMParser();
 
 const ProductPage = () => {
     const [data, setData] = useState(null);
-    const param = useParams()
+    const param = useParams();
     const currency = useOutletContext();
     const fetchData = async() => {
         const query = new Query('product', true)
@@ -23,7 +24,7 @@ const ProductPage = () => {
         .addField(new Field('attributes')
             .addFieldList(['id', 'name', 'type'])
             .addField(new Field('items')
-                .addFieldList(['displayValue', 'value', 'id']) 
+                .addFieldList(['displayValue', 'value', 'id'])
             )
         )
         const {product} = await client.post(query)
@@ -43,37 +44,28 @@ const ProductPage = () => {
         <>
             {data && (
                 <div className="product-view">
-                    <div className="thumbnails">
-                        {data.gallery.map(image => (
-                            <img className="images" src={image}/>
-                        ))}
-                    </div>
-                    <div className="featured-picture">
-                        <img src={data.gallery[0]}/>
-                    </div>
+                    <ProductGallery gallery={data.gallery}></ProductGallery>
                     <div className="product-info">
                         <h1>{data.brand}</h1>
                         <h2>{data.name}</h2>
-                        <h3>{data.attributes.map(function (attribute) {
+                        <h3>{data.attributes.map(function (attribute, index) {
                             return (
-                                <p>{attribute.name + ":"}
-                                    {attribute.items.map(function (item) {
+                                <div key={index}>{attribute.name}:
+                                    {attribute.items.map(function (item, index) {
                                         return (
-                                            <>
-                                                <label htmlFor={item.id}> 
+                                                <label key={index} htmlFor={item.id}> 
                                                     <input value={item.value} id={item.id} name={attribute.name} type="radio"/>
                                                         <div className="radio-tile">
                                                             {item.displayValue}
                                                         </div>
                                                 </label>
-                                            </>
                                         )
                                     })}
-                                </p>
+                                </div>
                             )
                         })}</h3>
                         <p>PRICE:</p>
-                        <h4>{data.activePrice.symbol}{data.activePrice.amount}</h4>
+                        <h4>{data.activePrice.currency.symbol}{data.activePrice.amount}</h4>
                         <div className="cart-adding">
                             <button>ADD TO CART</button>
                         </div>
