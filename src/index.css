@@ -157,6 +157,8 @@ img {
 label {
   position: relative;
   display: inline-block;
+  border: 1px solid #1D1F22;
+  margin: 10px 5px;
 }
 
 label input {
@@ -171,5 +173,6 @@ label input {
 }
 
 label input:checked + .radio-tile {
-  background: red;
+  background: #1D1F22;
+  color: white;
 }

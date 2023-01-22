@@ -56,7 +56,7 @@ const ProductPage = () => {
                         <h2>{data.name}</h2>
                         <h3>{data.attributes.map(function (attribute) {
                             return (
-                                <p>{attribute.name}
+                                <p>{attribute.name + ":"}
                                     {attribute.items.map(function (item) {
                                         return (
                                             <>

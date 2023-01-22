@@ -68,3 +68,7 @@
   cursor: pointer;
   border: none;
 }
+
+.thumbnails:hover + .featured-picture {
+  display: inline;
+}
