@@ -22,6 +22,7 @@ function Home() {
               )
           )
         )
+
       const {category} = await client.post(query)
       const refinedCategory = new Object(category)
       setActiveCategory({...refinedCategory, products: handleActiveCurrencyProducts(category.products)})
