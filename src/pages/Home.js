@@ -5,14 +5,14 @@ import { useOutletContext, Link } from "react-router-dom";
 
 function Home() {
   const [activeCategory, setActiveCategory] = useState(null);
-  const currency = useOutletContext();
-  console.log(currency)
+  const [currency, activeTab] = useOutletContext();
+
 
 
   const fetchData = async() => {
       client.setEndpoint('http://localhost:4000/')
       const query = new Query('category', true)
-        .addArgument('input', 'CategoryInput', { title: 'clothes' })
+        .addArgument('input', 'CategoryInput', { title: activeTab })
         .addField(new Field('products')
           .addFieldList(['name', 'gallery', 'id'])
           .addField(new Field('prices')
@@ -31,12 +31,12 @@ function Home() {
       (async() => {
         await fetchData()
       })()
-  }, [currency])
+  }, [currency, activeTab])
 
   const handleActiveCurrencyProducts = (products) => {
     const productList = []
-    console.log(products)
-    console.log(currency)
+
+
     products.forEach(product => {
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
         productList.push({

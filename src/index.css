@@ -39,11 +39,13 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+  text-transform: uppercase;
 }
 
 .active {
   color: #5ECE7B;
   border-bottom: solid 2px #5ECE7B;
+  text-transform: uppercase;
 }
 
 nav .section-left {

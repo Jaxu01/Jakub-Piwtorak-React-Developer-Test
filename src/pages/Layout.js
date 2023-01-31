@@ -7,7 +7,7 @@ import {ReactComponent as ReactLogo} from '../logo.svg';
 import {ReactComponent as CartLogo} from '../cartIcon.svg';
 
 function Layout() {
-    const [activeTab, setActiveTab] = useState(0);
+    const [activeTab, setActiveTab] = useState("all");
     const [currency, setCurrency] = useState({label: 'USD', symbol: "$"});
     const [categoryTabs, setCategoryTabs] = useState(null);
 
@@ -39,11 +39,12 @@ useEffect(() => {
             <nav className="navigation">
             <div className="section-left">
                 {categoryTabs?.map((category, index) => (
-                    <p key={index}>{category.name}</p>
+                    <button 
+                        className={category.name === activeTab ? 'active tab-button' : 'tab-button'}
+                        onClick={() => handleChange(category.name)} 
+                        key={index}
+                    >{category.name}</button>
                 ))}
-                <button className={"0" === activeTab? 'active tab-button': 'tab-button'} data-active-index="0" onClick={({target}) => handleChange(target.dataset.activeIndex)}>WOMEN</button>
-                <button className={"1" === activeTab? 'active tab-button': 'tab-button'} data-active-index="1" onClick={({target}) => handleChange(target.dataset.activeIndex)}>MEN</button>
-                <button className={"2" === activeTab? 'active tab-button': 'tab-button'} data-active-index="2" onClick={({target}) => handleChange(target.dataset.activeIndex)}>KIDS</button>
             </div>
             <div className="section-middle">
                <ReactLogo></ReactLogo>
@@ -54,7 +55,7 @@ useEffect(() => {
             </div>
             </nav>
         </header>
-        <Outlet context={ currency }/>
+        <Outlet context={ [currency, activeTab] }/>
         </div>
     )
 }

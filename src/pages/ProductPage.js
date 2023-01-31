@@ -10,7 +10,7 @@ const parser = new DOMParser();
 const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams();
-    const currency = useOutletContext();
+    const [currency] = useOutletContext();
     const fetchData = async() => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)
@@ -31,14 +31,14 @@ const ProductPage = () => {
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
         setData({...Object(product), activePrice})
     }
-    console.log(data)
+
     
     useEffect(() => { 
         (async() => {
             await fetchData()
         })()
     }, [])
-    console.log(data)
+
 
     return (
         <>
@@ -69,7 +69,7 @@ const ProductPage = () => {
                         <div className="cart-adding">
                             <button>ADD TO CART</button>
                         </div>
-                        <div dangerouslySetInnerHTML={{__html: data.description}}/>
+                        <p dangerouslySetInnerHTML={{__html: data.description}}/>
                     </div>
                 </div>
             )}
