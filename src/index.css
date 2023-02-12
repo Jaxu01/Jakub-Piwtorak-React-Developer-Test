@@ -73,6 +73,7 @@ nav .section-right {
   position: absolute;
   margin-top: 300px;
   box-shadow: 0px 4px 35px 0px rgba(168, 172, 176, 0.19);
+  z-index: 1;
 }
 
 .currencies-container {
@@ -127,11 +128,26 @@ main {
   grid-template-columns: repeat(3, 1fr)
 }
 
+.product-name {
+  text-decoration: none;
+  position: relative;
+}
+
 .product-name img {
   width: 100%;
   height: fit-content;
   object-fit: cover;
   object-position: top;
+}
+
+.product-hover {
+  flex-direction: column;
+  padding: 16px;
+}
+
+.product-hover:hover {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  transition: 300ms;
 }
 
 main > * {
@@ -143,8 +159,8 @@ img {
 }
 
 .product-list img {
-  max-width: 100%;
-  max-height: 300px;
+  aspect-ratio: 330/350;
+  object-fit: cover;
 }
 
 .images {
@@ -177,4 +193,54 @@ label input {
 label input:checked + .radio-tile {
   background: #1D1F22;
   color: white;
+}
+
+.add-cart {
+  width: 24px;
+  height: 24px;
+}
+
+.add-cart path,
+.white.add-cart {
+  fill: white;
+  stroke: none;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background-color: #5ECE7B;
+  border-radius: 100%;
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.menu-trigger {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  width: 200px;
+  top: 20px;
+}
+
+.dropdown-menu.active-cart {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-menu.inactive-cart {
+  opacity: 0;
+  visibility: hidden;
+}
+
+li {
+  list-style-type: none;
 }

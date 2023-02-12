@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
 import {ReactComponent as ReactLogo} from '../logo.svg';
-import {ReactComponent as CartLogo} from '../cartIcon.svg';
+import MiniCart from '../components/MiniCart.js';
+
 
 function Layout() {
     const [activeTab, setActiveTab] = useState("all");
@@ -51,7 +52,7 @@ useEffect(() => {
             </div>
             <div className="section-right">
                 <Currencies activeCurrency={currency} setCurrency={handleCurrency}/>
-                <CartLogo></CartLogo>
+                <MiniCart currency={currency}></MiniCart>
             </div>
             </nav>
         </header>

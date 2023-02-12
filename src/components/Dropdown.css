@@ -1,0 +1,33 @@
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border: solid;
+    z-index: 1;
+    animation: slideDown ease 255ms;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 16px;
+    gap: 32px;
+    width: 325px;
+    max-height: 677px;
+    overflow: auto;
+}
+
+@keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-60px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}

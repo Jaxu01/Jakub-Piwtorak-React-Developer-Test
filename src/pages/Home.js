@@ -2,6 +2,7 @@ import '../index.css';
 import { useState, useEffect } from "react";
 import { client, Field, Query } from "@tilework/opus";
 import { useOutletContext, Link } from "react-router-dom";
+import {ReactComponent as CartLogo} from '../cartIcon.svg';
 
 function Home() {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -51,12 +52,17 @@ function Home() {
       <div className="App">
         <main className="product-list">
           {activeCategory?.products?.map((product, index) => (
-            <Link to={product.id} key={index} className="product-name">
-              <img src={product.gallery[0]}></img>
-              <p>{product.name}</p>
-              <p>{product.product}</p>
-              <p>{product.activePrice.currency.symbol}{product.activePrice.amount}</p>
-            </Link>
+            <div className="product-hover" key={index}>
+              <Link to={product.id} className="product-name">
+                <img src={product.gallery[0]}></img>
+                <div className="circle">
+                  <CartLogo className="add-cart white"></CartLogo>
+                </div>
+                <p>{product.name}</p>
+                <p>{product.product}</p>
+                <p>{product.activePrice.currency.symbol}{product.activePrice.amount}</p>
+              </Link>
+            </div>
           ))}
         </main>
       </div>

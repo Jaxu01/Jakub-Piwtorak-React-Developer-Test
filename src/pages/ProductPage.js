@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import ProductGallery from '../components/ProductGallery.js'
 import '../productpage.css'
@@ -11,6 +11,7 @@ const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams();
     const [currency] = useOutletContext();
+    const formRef = useRef(null);
     const fetchData = async() => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)
@@ -39,6 +40,17 @@ const ProductPage = () => {
         })()
     }, [])
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        var miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
+        const formData = new FormData(event.target)
+        var object = {}
+        formData.forEach(function(value, key){
+            object[key] = value
+        });
+        console.log(object)
+        localStorage.setItem("minicart", JSON.stringify([...miniCart, object]))
+    }
 
     return (
         <>
@@ -46,29 +58,32 @@ const ProductPage = () => {
                 <div className="product-view">
                     <ProductGallery gallery={data.gallery}></ProductGallery>
                     <div className="product-info">
-                        <h1>{data.brand}</h1>
-                        <h2>{data.name}</h2>
-                        <h3>{data.attributes.map(function (attribute, index) {
-                            return (
-                                <div key={index}>{attribute.name}:
-                                    {attribute.items.map(function (item, index) {
-                                        return (
-                                                <label key={index} htmlFor={item.id}> 
-                                                    <input value={item.value} id={item.id} name={attribute.name} type="radio"/>
-                                                        <div className="radio-tile">
-                                                            {item.displayValue}
-                                                        </div>
-                                                </label>
-                                        )
-                                    })}
-                                </div>
-                            )
-                        })}</h3>
-                        <p>PRICE:</p>
-                        <h4>{data.activePrice.currency.symbol}{data.activePrice.amount}</h4>
-                        <div className="cart-adding">
-                            <button>ADD TO CART</button>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <h1>{data.brand}</h1>
+                            <h2>{data.name}</h2>
+                            <h3>{data.attributes.map(function (attribute, index) {
+                                return (
+                                    <div key={index}>{attribute.name}:
+                                        {attribute.items.map(function (item, index) {
+                                            return (
+                                                    <label key={index} htmlFor={item.id}> 
+                                                        <input value={item.value} id={item.id} name={attribute.name} type="radio"/>
+                                                            <div className="radio-tile">
+                                                                {item.displayValue}
+                                                            </div>
+                                                    </label>
+                                            )
+                                        })}
+                                    </div>
+                                )
+                            })}</h3>
+                            <p>PRICE:</p>
+                            <h4>{data.activePrice.currency.symbol}{data.activePrice.amount}</h4>
+                            <input name="productId" value={param.productId} type="hidden"/>
+                            <div className="cart-adding">
+                                <button>ADD TO CART</button>
+                            </div>
+                        </form>
                         <p dangerouslySetInnerHTML={{__html: data.description}}/>
                     </div>
                 </div>

@@ -25,6 +25,14 @@ const [state, setState] = useState({
         })
     }
 
+    function DropdownItem(props) {
+        return (
+            <li className="dropdownItem">
+                <a>{props.text}</a>
+            </li>
+        )
+    }
+
     return (
         <>
             <div className="default-currency">
