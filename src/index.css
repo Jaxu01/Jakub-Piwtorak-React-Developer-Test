@@ -218,29 +218,3 @@ label input:checked + .radio-tile {
   right: 0;
   transform: translateY(-50%);
 }
-
-.menu-trigger {
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: absolute;
-  background-color: #fff;
-  width: 200px;
-  top: 20px;
-}
-
-.dropdown-menu.active-cart {
-  opacity: 1;
-  visibility: visible;
-}
-
-.dropdown-menu.inactive-cart {
-  opacity: 0;
-  visibility: hidden;
-}
-
-li {
-  list-style-type: none;
-}
