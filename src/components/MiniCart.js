@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { client, Field, Query } from "@tilework/opus";
 import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
+import MiniCartAttributeItems from "./MiniCartAttributeItems.js";
 import './MiniCart.css';
 
 const MiniCart = ({currency}) => {
@@ -49,7 +50,7 @@ const MiniCart = ({currency}) => {
 
     
     return (
-        <Dropdown title={<CartIcon></CartIcon>}> 
+        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon></CartIcon>}> 
                 {!cartProducts.length &&
                     (
                         <p>No Items Available</p>
@@ -63,17 +64,13 @@ const MiniCart = ({currency}) => {
                             <div className="price">{cartProduct.activePrice.currency.symbol}{cartProduct.activePrice.amount}</div>
                             <div>{cartProduct.attributes.map(function (attribute, index) {
                                         return (
-                                            <div className="minicart-radio-tiles" style={{backgroundColor: cartProduct.choices[attribute.id]}} key={index}>
+                                            <div className="minicart-radio-tiles" key={index}>
                                                 {attribute.name}
-                                                {attribute.items.map(function (item, index) {
-                                                    return (
-                                                            <label key={index} htmlFor={item.id} style={{backgroundColor: item.value}}> 
-                                                                    <div className="minicart-radio-tile">
-                                                                        {item.displayValue}
-                                                                    </div>
-                                                            </label>
-                                                    )
-                                                })}
+                                                <MiniCartAttributeItems
+                                                    choice={cartProduct.choices[attribute.id]}
+                                                    items={attribute.items}
+                                                    type={attribute.type}
+                                                ></MiniCartAttributeItems>
                                             </div>
                                         )
                                 })}</div>

@@ -42,14 +42,18 @@ const ProductPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        var miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
-        const formData = new FormData(event.target)
-        var object = {}
-        formData.forEach(function(value, key){
-            object[key] = value
-        });
-        console.log(object)
-        localStorage.setItem("minicart", JSON.stringify([...miniCart, object]))
+        if(event.target.checkValidity()) {
+            var miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
+            const formData = new FormData(event.target)
+            var object = {}
+            formData.forEach(function(value, key){
+                object[key] = value
+            });
+            localStorage.setItem("minicart", JSON.stringify([...miniCart, object]))
+            document.dispatchEvent(new CustomEvent("minicart:set-open", {
+                detail: { open: true }
+            }))
+        }
     }
 
     return (
@@ -67,7 +71,7 @@ const ProductPage = () => {
                                         {attribute.items.map(function (item, index) {
                                             return (
                                                     <label key={index} htmlFor={item.id}> 
-                                                        <input value={item.value} id={item.id} name={attribute.name} type="radio"/>
+                                                        <input required value={item.value} id={item.id} name={attribute.name} type="radio"/>
                                                             <div className="radio-tile">
                                                                 {item.displayValue}
                                                             </div>

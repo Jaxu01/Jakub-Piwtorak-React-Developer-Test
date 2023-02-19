@@ -14,9 +14,14 @@
     font-family: 'Raleway';
 }
 
-.minicart-radio-tile {
+.minicart-radio-tile,
+.minicart-radio-tile-active {
     height: 24px;
+    min-width: 24px;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .information-box {
@@ -36,4 +41,8 @@
 
 .price {
     font-weight: bold;
+}
+
+.minicart-radio-tile-active {
+    
 }
