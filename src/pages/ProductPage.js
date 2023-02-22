@@ -5,13 +5,11 @@ import { useOutletContext } from "react-router-dom";
 import ProductGallery from '../components/ProductGallery.js'
 import '../productpage.css'
 
-const parser = new DOMParser();
 
 const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams();
     const [currency] = useOutletContext();
-    const formRef = useRef(null);
     const fetchData = async() => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)
@@ -87,8 +85,8 @@ const ProductPage = () => {
                             <div className="cart-adding">
                                 <button>ADD TO CART</button>
                             </div>
+                            <p dangerouslySetInnerHTML={{__html: data.description}}/>
                         </form>
-                        <p dangerouslySetInnerHTML={{__html: data.description}}/>
                     </div>
                 </div>
             )}

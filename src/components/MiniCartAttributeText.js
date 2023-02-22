@@ -1,6 +1,4 @@
-// import './MiniCartAttributeItems.css';
-
-const MiniCartAttributeItems = ({items, choice, type}) => {
+const MiniCartAttributeText = ({items, choice, type}) => {
     
     return (
         <div>
@@ -15,4 +13,4 @@ const MiniCartAttributeItems = ({items, choice, type}) => {
     )
 }
 
-export default MiniCartAttributeItems;
+export default MiniCartAttributeText;

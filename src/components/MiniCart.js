@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { client, Field, Query } from "@tilework/opus";
 import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
-import MiniCartAttributeItems from "./MiniCartAttributeItems.js";
+import MiniCartAttributeText from "./MiniCartAttributeText.js";
+import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
 import './MiniCart.css';
 
 const MiniCart = ({currency}) => {
@@ -57,6 +58,7 @@ const MiniCart = ({currency}) => {
                     )
                 }
             {!!cartProducts.length && cartProducts.map((cartProduct, index) => (
+                <>
                     <div key={index} className="product-info">
                         <div className="information-box">
                             <div>{cartProduct.name}</div>
@@ -66,11 +68,17 @@ const MiniCart = ({currency}) => {
                                         return (
                                             <div className="minicart-radio-tiles" key={index}>
                                                 {attribute.name}
-                                                <MiniCartAttributeItems
-                                                    choice={cartProduct.choices[attribute.id]}
-                                                    items={attribute.items}
-                                                    type={attribute.type}
-                                                ></MiniCartAttributeItems>
+                                                {attribute.type !=="swatch" ? 
+                                                    <MiniCartAttributeText
+                                                        choice={cartProduct.choices[attribute.id]}
+                                                        items={attribute.items}
+                                                    ></MiniCartAttributeText> 
+                                                    :
+                                                    <MiniCartAttributeSwatch
+                                                        choice={cartProduct.choices[attribute.id]}
+                                                        items={attribute.items}
+                                                    ></MiniCartAttributeSwatch>
+                                                }
                                             </div>
                                         )
                                 })}</div>
@@ -79,7 +87,12 @@ const MiniCart = ({currency}) => {
                             <img src={cartProduct.gallery[0]}/>
                         </div>
                     </div>
+                </>
             ))}
+            <div className="minicart-buttons">
+                <a href="/viewbag" target="_blank" className="view-bag">view bag</a>
+                <a href="/checkout" target="_blank" className="checkout">checkout</a>
+            </div>
         </Dropdown>
     )
 }

@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import Layout from './pages/Layout';
+import ViewBag from './pages/ViewBag';
+import Checkout from './pages/Checkout';
 import { client } from "@tilework/opus";
 
 client.setEndpoint('http://localhost:4000/')
@@ -17,10 +19,12 @@ root.render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path=":productId" element={<ProductPage />} />
+          <Route path="viewbag" element={<ViewBag />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode> 
 );
 
 
