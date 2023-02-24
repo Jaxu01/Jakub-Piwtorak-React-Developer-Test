@@ -50,12 +50,9 @@
     color: white;
 }
 
-.minicart-swatch-tile {
-    border: 1px solid #CCC;
-}
-
 .minicart-swatch-tile-active {
-
+    outline: 3px solid #5ECE7B;
+    outline-offset: 3px;
 }
 
 .minicart-buttons {
