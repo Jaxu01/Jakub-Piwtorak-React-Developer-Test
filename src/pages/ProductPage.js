@@ -38,16 +38,48 @@ const ProductPage = () => {
         })()
     }, [])
 
+    const findExistingProduct = (miniCart, newItem) => {
+        return miniCart.find(product => product.productId === newItem.productId && JSON.stringify(product.attribute) === JSON.stringify(newItem.attribute))
+    }
+
+    const createNewProduct = (formElement) => {
+        const formData = new FormData(formElement)
+        const object = {}
+        formData.forEach(function(value, key){
+            const [name, name2] = key.split(".")
+            if(name2) {
+                object[name] = object[name] ?? {}
+                object[name][name2] = value
+            }
+            else {
+                object[name] = value
+            }
+        });
+        return object
+    }
+    const saveNewItem = (miniCart, newProduct) => {
+        const existingProduct = findExistingProduct(miniCart, newProduct)
+        let itemToStore = []
+        if(existingProduct) {
+            itemToStore = miniCart.map(item => {
+                if(JSON.stringify(item) === JSON.stringify(existingProduct)) {
+                    item.amount++
+                }
+                return item
+            })
+        }
+        else {
+            newProduct.amount = 1
+            itemToStore = [...miniCart, newProduct]
+        }
+        localStorage.setItem("minicart", JSON.stringify(itemToStore))
+    }
     const handleSubmit = (event) => {
         event.preventDefault()
         if(event.target.checkValidity()) {
-            var miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
-            const formData = new FormData(event.target)
-            var object = {}
-            formData.forEach(function(value, key){
-                object[key] = value
-            });
-            localStorage.setItem("minicart", JSON.stringify([...miniCart, object]))
+            const miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
+            const newProduct = createNewProduct(event.target)
+            saveNewItem(miniCart, newProduct)
             document.dispatchEvent(new CustomEvent("minicart:set-open", {
                 detail: { open: true }
             }))
@@ -69,7 +101,7 @@ const ProductPage = () => {
                                         {attribute.items.map(function (item, index) {
                                             return (
                                                     <label key={index} htmlFor={item.id}> 
-                                                        <input required value={item.value} id={item.id} name={attribute.name} type="radio"/>
+                                                        <input required value={item.value} id={item.id} name={`attribute.${attribute.name}`}  type="radio"/>
                                                             <div className="radio-tile">
                                                                 {item.displayValue}
                                                             </div>
