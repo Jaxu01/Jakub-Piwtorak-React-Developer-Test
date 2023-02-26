@@ -7,10 +7,9 @@ import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
 import './MiniCart.css';
 
 const MiniCart = ({currency}) => {
-    const [cartProducts, setCartProducts] = useState([]);
+    const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
     const minicartStorage = localStorage.getItem("minicart")
     const minicart = JSON.parse(minicartStorage)
-    console.log(cartProducts)
     
     const fetchProduct = async(cartItem) => {
         const query = new Query('product', true)
@@ -32,15 +31,22 @@ const MiniCart = ({currency}) => {
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
         return {...Object(product), activePrice, choices: cartItem}
     }
-
-    const fetchData = () => {
+    
+    const fetchData = async() => {
         const products = []
+        var amount = 0
+        var totalPrice = 0
         if (minicart.length) {
-            minicart.forEach(async cartItem => {
-                products.push(await fetchProduct(cartItem))
+            await minicart.forEach(async cartItem => {
+                const product = await fetchProduct(cartItem)
+                amount += cartItem.amount
+                totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
+                products.push(product)
             })
         }
-        setCartProducts(products)
+        console.log(products)
+        console.log(totalPrice)
+        setCartList({products, amount: amount, totalPrice: totalPrice})
     }
 
     useEffect(() => {
@@ -49,15 +55,15 @@ const MiniCart = ({currency}) => {
                 })()
     }, [])
 
-    
     return (
         <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon></CartIcon>}> 
-                {!cartProducts.length &&
+                {!cartList.products.length &&
                     (
                         <p>No Items Available</p>
                     )
                 }
-            {!!cartProducts.length && cartProducts.map((cartProduct, index) => (
+            <div className="minicart-description">My Bag, 2 Items</div>
+            {!!cartList.products.length && cartList.products.map((cartProduct, index) => (
                 <>
                     <div key={index} className="product-info">
                         <div className="information-box">
@@ -70,12 +76,12 @@ const MiniCart = ({currency}) => {
                                                 {attribute.name}
                                                 {attribute.type !=="swatch" ? 
                                                     <MiniCartAttributeText
-                                                        choice={cartProduct.choices[attribute.id]}
+                                                        choice={cartProduct.choices.attribute[attribute.id]}
                                                         items={attribute.items}
                                                     ></MiniCartAttributeText> 
                                                     :
                                                     <MiniCartAttributeSwatch
-                                                        choice={cartProduct.choices[attribute.id]}
+                                                        choice={cartProduct.choices.attribute[attribute.id]}
                                                         items={attribute.items}
                                                     ></MiniCartAttributeSwatch>
                                                 }
@@ -83,12 +89,24 @@ const MiniCart = ({currency}) => {
                                         )
                                 })}</div>
                             </div>
+                        <div className="amount-changer">
+                            <div className="increase-amount">
+                                <button className="plus-button">+</button>
+                            </div>
+                            <div className="product-amount">
+                                <p>{cartProduct.choices.amount}</p>
+                            </div>
+                            <div className="decrease-amount">
+                                <button className="minus-button">-</button>
+                            </div>
+                        </div>
                         <div className="image-box">
                             <img src={cartProduct.gallery[0]}/>
                         </div>
                     </div>
                 </>
             ))}
+            <div className="total-cost">Total {cartList.totalPrice}</div>
             <div className="minicart-buttons">
                 <a href="/viewbag" target="_blank" className="view-bag">view bag</a>
                 <a href="/checkout" target="_blank" className="checkout">checkout</a>

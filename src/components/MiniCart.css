@@ -10,7 +10,8 @@
    }
 
 .product-info {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 24px auto;
     font-family: 'Raleway';
 }
 
@@ -109,4 +110,42 @@
     margin: 0px 0px 0px 4px;
     cursor: pointer;
     text-decoration: none;
+}
+
+.amount-changer  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plus-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+	padding: 0;
+    font-size: 20px;
+	cursor: pointer;
+    border: 1px solid #1D1F22;
+    
+}
+
+.minus-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+	padding: 0;
+    font-size: 20px;
+	cursor: pointer;
+    border: 1px solid #1D1F22;
+}
+
+.total-cost {
+
 }
