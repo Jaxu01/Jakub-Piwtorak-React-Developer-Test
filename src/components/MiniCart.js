@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { client, Field, Query } from "@tilework/opus";
+import { client, Field, Query, CombinedField } from "@tilework/opus";
 import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
 import MiniCartAttributeText from "./MiniCartAttributeText.js";
@@ -11,7 +11,7 @@ const MiniCart = ({currency}) => {
     const minicartStorage = localStorage.getItem("minicart")
     const minicart = JSON.parse(minicartStorage)
     
-    const fetchProduct = async(cartItem) => {
+    const makeProductQuery = (cartItem) => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', cartItem.productId)
         .addFieldList(['name', 'gallery', 'description', 'brand'])
@@ -27,26 +27,32 @@ const MiniCart = ({currency}) => {
                 .addFieldList(['displayValue', 'value', 'id'])
             )
         )
-        const {product} = await client.post(query)
+        return query
+    }
+    const fetchProducts = async(combinedField) => {
+        const {product} = await client.post(combinedField)
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
-        return {...Object(product), activePrice, choices: cartItem}
+        return {...Object(product), activePrice}
     }
     
     const fetchData = async() => {
-        const products = []
         var amount = 0
         var totalPrice = 0
+        const combinedField = new CombinedField
         if (minicart.length) {
-            await minicart.forEach(async cartItem => {
-                const product = await fetchProduct(cartItem)
-                amount += cartItem.amount
-                totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
-                products.push(product)
+            const productQueries = new Set(minicart.map(cartItem => {
+                return makeProductQuery(cartItem)
+            }))
+            productQueries.forEach(productQuery => {
+                combinedField.add(productQuery)
             })
+            // amount += cartItem.amount
+            // totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
+            const products = await fetchProducts(combinedField)
+            console.log(products)
+            setCartList({products, amount: amount, totalPrice: totalPrice})
         }
-        console.log(products)
         console.log(totalPrice)
-        setCartList({products, amount: amount, totalPrice: totalPrice})
     }
 
     useEffect(() => {
@@ -54,6 +60,14 @@ const MiniCart = ({currency}) => {
                     await fetchData()
                 })()
     }, [])
+
+    // const AmountChanger = (cartItem) => {
+    //     // localStorage.setItem('minicart', cartItem.productId)
+    //     // let currentAmount = localStorage.getItem("productId")
+    //     // localStorage.setItem("productId", currentAmount++)
+    //     // console.log(currentAmount)
+    //     // AmountChanger()
+    // }
 
     return (
         <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon></CartIcon>}> 

@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import ProductGallery from '../components/ProductGallery.js'
+import ProductGallery from '../components/ProductGallery.js';
+import { addItem } from '../actions/minicart.js';
+import { createNewProduct } from '../actions/product.js';
 import '../productpage.css'
 
 
@@ -30,7 +32,6 @@ const ProductPage = () => {
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
         setData({...Object(product), activePrice})
     }
-
     
     useEffect(() => { 
         (async() => {
@@ -38,48 +39,11 @@ const ProductPage = () => {
         })()
     }, [])
 
-    const findExistingProduct = (miniCart, newItem) => {
-        return miniCart.find(product => product.productId === newItem.productId && JSON.stringify(product.attribute) === JSON.stringify(newItem.attribute))
-    }
-
-    const createNewProduct = (formElement) => {
-        const formData = new FormData(formElement)
-        const object = {}
-        formData.forEach(function(value, key){
-            const [name, name2] = key.split(".")
-            if(name2) {
-                object[name] = object[name] ?? {}
-                object[name][name2] = value
-            }
-            else {
-                object[name] = value
-            }
-        });
-        return object
-    }
-    const saveNewItem = (miniCart, newProduct) => {
-        const existingProduct = findExistingProduct(miniCart, newProduct)
-        let itemToStore = []
-        if(existingProduct) {
-            itemToStore = miniCart.map(item => {
-                if(JSON.stringify(item) === JSON.stringify(existingProduct)) {
-                    item.amount++
-                }
-                return item
-            })
-        }
-        else {
-            newProduct.amount = 1
-            itemToStore = [...miniCart, newProduct]
-        }
-        localStorage.setItem("minicart", JSON.stringify(itemToStore))
-    }
     const handleSubmit = (event) => {
         event.preventDefault()
         if(event.target.checkValidity()) {
-            const miniCart = JSON.parse(localStorage.getItem("minicart")) ?? []
             const newProduct = createNewProduct(event.target)
-            saveNewItem(miniCart, newProduct)
+            addItem(newProduct)
             document.dispatchEvent(new CustomEvent("minicart:set-open", {
                 detail: { open: true }
             }))
