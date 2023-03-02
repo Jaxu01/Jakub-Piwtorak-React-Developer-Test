@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import Layout from './pages/Layout';
 import ViewBag from './pages/ViewBag';
-import Checkout from './pages/Checkout';
+import Cart from './pages/Cart';
 import { client } from "@tilework/opus";
 
 client.setEndpoint('http://localhost:4000/')
@@ -20,7 +20,7 @@ root.render(
           <Route index element={<Home />} />
           <Route path=":productId" element={<ProductPage />} />
           <Route path="viewbag" element={<ViewBag />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -13,48 +13,45 @@ const MiniCart = ({currency}) => {
     
     const makeProductQuery = (cartItem) => {
         const query = new Query('product', true)
-        .addArgument('id', 'String!', cartItem.productId)
-        .addFieldList(['name', 'gallery', 'description', 'brand'])
-        .addField(new Field('prices')
-            .addFieldList(['amount'])
-            .addField(new Field('currency')
-                .addFieldList(['label', 'symbol'])
+            .addArgument('id', 'String!', cartItem.productId)
+            .addFieldList(['name', 'gallery', 'description', 'brand'])
+            .addField(new Field('prices')
+                .addFieldList(['amount'])
+                .addField(new Field('currency')
+                    .addFieldList(['label', 'symbol'])
+                )
             )
-        )
-        .addField(new Field('attributes')
-            .addFieldList(['id', 'name', 'type'])
-            .addField(new Field('items')
-                .addFieldList(['displayValue', 'value', 'id'])
+            .addField(new Field('attributes')
+                .addFieldList(['id', 'name', 'type'])
+                .addField(new Field('items')
+                    .addFieldList(['displayValue', 'value', 'id'])
+                )
             )
-        )
         return query
     }
-    const fetchProducts = async(combinedField) => {
-        const {product} = await client.post(combinedField)
+
+
+    const fetchProduct = async(productQuery) => {
+        const {product} = await client.post(productQuery)
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
         return {...Object(product), activePrice}
     }
-    
-    const fetchData = async() => {
-        var amount = 0
-        var totalPrice = 0
-        const combinedField = new CombinedField
-        if (minicart.length) {
-            const productQueries = new Set(minicart.map(cartItem => {
-                return makeProductQuery(cartItem)
-            }))
-            productQueries.forEach(productQuery => {
-                combinedField.add(productQuery)
-            })
-            // amount += cartItem.amount
-            // totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
-            const products = await fetchProducts(combinedField)
-            console.log(products)
-            setCartList({products, amount: amount, totalPrice: totalPrice})
-        }
-        console.log(totalPrice)
-    }
 
+    const fetchData = async() => {
+        var totalPrice = 0
+        if (minicart.length) {
+            const products = [] 
+            minicart.forEach(async(cartItem) => {
+                const productQuery = makeProductQuery(cartItem)
+                const product = await fetchProduct(productQuery)
+                // amount += cartItem.amount
+                // totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
+                products.push({...product, choices: cartItem})
+            })
+            setCartList({products, totalPrice: totalPrice})
+        }
+    }
+    console.log(cartList)
     useEffect(() => {
                 (async() => {
                     await fetchData()
@@ -76,7 +73,7 @@ const MiniCart = ({currency}) => {
                         <p>No Items Available</p>
                     )
                 }
-            <div className="minicart-description">My Bag, 2 Items</div>
+            <div className="minicart-description">My Bag, {cartList.products.length} Items</div>
             {!!cartList.products.length && cartList.products.map((cartProduct, index) => (
                 <>
                     <div key={index} className="product-info">
