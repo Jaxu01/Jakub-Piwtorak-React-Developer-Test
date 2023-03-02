@@ -38,20 +38,24 @@ const MiniCart = ({currency}) => {
     }
 
     const fetchData = async() => {
-        var totalPrice = 0
         if (minicart.length) {
-            const products = [] 
-            minicart.forEach(async(cartItem) => {
+            const products = await Promise.all(minicart.map(async(cartItem) => {
                 const productQuery = makeProductQuery(cartItem)
                 const product = await fetchProduct(productQuery)
                 // amount += cartItem.amount
-                // totalPrice = totalPrice + (product.activePrice.amount * product.choices.amount)
-                products.push({...product, choices: cartItem})
-            })
-            setCartList({products, totalPrice: totalPrice})
+                return {...product, choices: cartItem}
+            }))
+            const totalPrice = products.reduce((accumulator, product) => {
+                console.log(accumulator)
+                return accumulator + (product.activePrice.amount * product.choices.amount)
+            }, 0)
+            const amount = products.reduce((accumulator, product) => {
+                return accumulator + product.choices.amount
+            }, 0)
+            setCartList({products, totalPrice, amount})
         }
     }
-    console.log(cartList)
+
     useEffect(() => {
                 (async() => {
                     await fetchData()
@@ -73,7 +77,7 @@ const MiniCart = ({currency}) => {
                         <p>No Items Available</p>
                     )
                 }
-            <div className="minicart-description">My Bag, {cartList.products.length} Items</div>
+            <div className="minicart-description">My Bag, {cartList.amount} Items</div>
             {!!cartList.products.length && cartList.products.map((cartProduct, index) => (
                 <>
                     <div key={index} className="product-info">
