@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import { client, Field, Query, CombinedField } from "@tilework/opus";
+import { client, Field, Query } from "@tilework/opus";
 import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
 import MiniCartAttributeText from "./MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
+import { changeProductAmount, getItems } from '../actions/minicart.js';
 import './MiniCart.css';
 
 const MiniCart = ({currency}) => {
     const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
-    const minicartStorage = localStorage.getItem("minicart")
-    const minicart = JSON.parse(minicartStorage)
     
     const makeProductQuery = (cartItem) => {
         const query = new Query('product', true)
@@ -37,41 +36,51 @@ const MiniCart = ({currency}) => {
         return {...Object(product), activePrice}
     }
 
-    const fetchData = async() => {
-        if (minicart.length) {
-            const products = await Promise.all(minicart.map(async(cartItem) => {
-                const productQuery = makeProductQuery(cartItem)
-                const product = await fetchProduct(productQuery)
-                // amount += cartItem.amount
-                return {...product, choices: cartItem}
-            }))
-            const totalPrice = products.reduce((accumulator, product) => {
-                console.log(accumulator)
-                return accumulator + (product.activePrice.amount * product.choices.amount)
-            }, 0)
-            const amount = products.reduce((accumulator, product) => {
-                return accumulator + product.choices.amount
-            }, 0)
-            setCartList({products, totalPrice, amount})
+    const fetchData = async(minicart) => {
+        const products = await Promise.all(minicart.map(async(cartItem) => {
+            const productQuery = makeProductQuery(cartItem)
+            const product = await fetchProduct(productQuery)
+            // amount += cartItem.amount
+            return {...product, choices: cartItem}
+        }))
+        const totalPrice = products.reduce((accumulator, product) => {
+            console.log(accumulator)
+            return accumulator + (product.activePrice.amount * product.choices.amount)
+        }, 0)
+        const amount = products.reduce((accumulator, product) => {
+            return accumulator + product.choices.amount
+        }, 0)
+        setCartList({products, totalPrice, amount})
+    }
+
+    const updateList = async() => {
+        console.log('test')
+        const minicart = getItems()
+        if (minicart?.length) {
+            await fetchData(minicart)
+        }
+        else {
+            setCartList({products: [], amount: 0, totalPrice: 0})
         }
     }
 
     useEffect(() => {
-                (async() => {
-                    await fetchData()
-                })()
+        (async() => {
+            document.addEventListener("minicart:update", () => {
+                updateList()
+            })
+            await updateList()
+        })()
     }, [])
 
-    // const AmountChanger = (cartItem) => {
-    //     // localStorage.setItem('minicart', cartItem.productId)
-    //     // let currentAmount = localStorage.getItem("productId")
-    //     // localStorage.setItem("productId", currentAmount++)
-    //     // console.log(currentAmount)
-    //     // AmountChanger()
-    // }
+    const amountChanger = async(productChoices, change) => {
+        changeProductAmount(productChoices, change)
+        await updateList()
+        console.log(change)
+    }
 
     return (
-        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon></CartIcon>}> 
+        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon/>}> 
                 {!cartList.products.length &&
                     (
                         <p>No Items Available</p>
@@ -106,22 +115,24 @@ const MiniCart = ({currency}) => {
                             </div>
                         <div className="amount-changer">
                             <div className="increase-amount">
-                                <button className="plus-button">+</button>
+                                <button onClick={() => amountChanger(cartProduct.choices, 1)} className="plus-button">+</button>
                             </div>
                             <div className="product-amount">
                                 <p>{cartProduct.choices.amount}</p>
                             </div>
                             <div className="decrease-amount">
-                                <button className="minus-button">-</button>
+                                <button onClick={() => amountChanger(cartProduct.choices, -1)} className="minus-button">-</button>
                             </div>
                         </div>
                         <div className="image-box">
-                            <img src={cartProduct.gallery[0]}/>
+                            <img className="cart-image" src={cartProduct.gallery[0]}/>
                         </div>
                     </div>
                 </>
             ))}
-            <div className="total-cost">Total {cartList.totalPrice}</div>
+            <strong className="total-cost">Total
+                <div className="total">{currency.symbol}{cartList.totalPrice}</div>
+            </strong>
             <div className="minicart-buttons">
                 <a href="/viewbag" target="_blank" className="view-bag">view bag</a>
                 <a href="/checkout" target="_blank" className="checkout">checkout</a>

@@ -47,6 +47,7 @@ const ProductPage = () => {
             document.dispatchEvent(new CustomEvent("minicart:set-open", {
                 detail: { open: true }
             }))
+            document.dispatchEvent(new CustomEvent("minicart:update"))
         }
     }
 

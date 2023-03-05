@@ -1,7 +1,3 @@
-const findExistingProduct = (miniCart, newItem) => {
-    return miniCart.find(product => product.productId === newItem.productId && JSON.stringify(product.attribute) === JSON.stringify(newItem.attribute))
-}
-
 const createNewProduct = (formElement) => {
     const formData = new FormData(formElement)
     const object = {}
@@ -18,4 +14,4 @@ const createNewProduct = (formElement) => {
     return object
 }
 
-export {findExistingProduct, createNewProduct};
+export {createNewProduct};
