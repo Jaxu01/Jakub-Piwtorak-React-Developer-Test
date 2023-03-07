@@ -1,9 +1,4 @@
 .cart-name {
-    position: absolute;
-    width: 84px;
-    height: 40px;
-    left: 100px;
-    top: 160px;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 700;
@@ -14,7 +9,6 @@
 }
 
 .bar {
-    position: absolute;
     width: 1240px;
     height: 1px;
     left: 100px;

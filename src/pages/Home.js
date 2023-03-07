@@ -53,7 +53,7 @@ function Home() {
         <main className="product-list">
           {activeCategory?.products?.map((product, index) => (
             <div className="product-hover" key={index}>
-              <Link to={product.id} className="product-name">
+              <Link to={`product/${product.id}`} className="product-name">
                 <img src={product.gallery[0]}></img>
                 <div className="circle">
                   <CartLogo className="add-cart white"></CartLogo>

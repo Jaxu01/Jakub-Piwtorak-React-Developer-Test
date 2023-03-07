@@ -1,48 +1,18 @@
 import { useState, useEffect } from "react";
-import { client, Field, Query } from "@tilework/opus";
 import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
 import MiniCartAttributeText from "./MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
 import { changeProductAmount, getItems } from '../actions/minicart.js';
 import './MiniCart.css';
+import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
 
 const MiniCart = ({currency}) => {
     const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
     
-    const makeProductQuery = (cartItem) => {
-        const query = new Query('product', true)
-            .addArgument('id', 'String!', cartItem.productId)
-            .addFieldList(['name', 'gallery', 'description', 'brand'])
-            .addField(new Field('prices')
-                .addFieldList(['amount'])
-                .addField(new Field('currency')
-                    .addFieldList(['label', 'symbol'])
-                )
-            )
-            .addField(new Field('attributes')
-                .addFieldList(['id', 'name', 'type'])
-                .addField(new Field('items')
-                    .addFieldList(['displayValue', 'value', 'id'])
-                )
-            )
-        return query
-    }
-
-
-    const fetchProduct = async(productQuery) => {
-        const {product} = await client.post(productQuery)
-        const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
-        return {...Object(product), activePrice}
-    }
 
     const fetchData = async(minicart) => {
-        const products = await Promise.all(minicart.map(async(cartItem) => {
-            const productQuery = makeProductQuery(cartItem)
-            const product = await fetchProduct(productQuery)
-            // amount += cartItem.amount
-            return {...product, choices: cartItem}
-        }))
+        const products = await fetchMinicartProducts(minicart, currency.label)
         const totalPrice = products.reduce((accumulator, product) => {
             console.log(accumulator)
             return accumulator + (product.activePrice.amount * product.choices.amount)
@@ -54,7 +24,6 @@ const MiniCart = ({currency}) => {
     }
 
     const updateList = async() => {
-        console.log('test')
         const minicart = getItems()
         if (minicart?.length) {
             await fetchData(minicart)
@@ -88,7 +57,6 @@ const MiniCart = ({currency}) => {
                 }
             <div className="minicart-description"><span className="my-bag">My Bag</span>, {cartList.amount} Items</div>
             {!!cartList.products.length && cartList.products.map((cartProduct, index) => (
-                <>
                     <div key={index} className="product-info">
                         <div className="information-box">
                             <div>{cartProduct.name}</div>
@@ -128,14 +96,13 @@ const MiniCart = ({currency}) => {
                             <img className="cart-image" src={cartProduct.gallery[0]}/>
                         </div>
                     </div>
-                </>
             ))}
             <strong className="total-cost">Total
                 <div className="total">{currency.symbol}{cartList.totalPrice}</div>
             </strong>
             <div className="minicart-buttons">
-                <a href="/viewbag" target="_blank" className="view-bag">view bag</a>
-                <a href="/checkout" target="_blank" className="checkout">checkout</a>
+                <a href="/cart" className="view-bag">view bag</a>
+                <a className="checkout">checkout</a>
             </div>
         </Dropdown>
     )

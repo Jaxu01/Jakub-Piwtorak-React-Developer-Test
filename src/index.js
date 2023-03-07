@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 import Layout from './pages/Layout';
-import ViewBag from './pages/ViewBag';
 import Cart from './pages/Cart';
 import { client } from "@tilework/opus";
 
@@ -18,8 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path=":productId" element={<ProductPage />} />
-          <Route path="viewbag" element={<ViewBag />} />
+          <Route path="product/:productId" element={<ProductPage />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
