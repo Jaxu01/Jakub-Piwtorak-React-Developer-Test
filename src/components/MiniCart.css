@@ -33,7 +33,12 @@
     flex-direction: column;
     justify-content: center;
     padding: 8px;
-    gap: 16px;
+    gap: 8px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 160%;
 }
 
 .image-box {
@@ -154,4 +159,16 @@
 .total-cost {
     display: flex;
     justify-content: space-between;
+}
+
+.my-bag {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 160%;
+}
+
+.minicart-description {
+    margin-top: 10px;
 }

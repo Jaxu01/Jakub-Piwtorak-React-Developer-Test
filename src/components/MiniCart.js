@@ -80,13 +80,13 @@ const MiniCart = ({currency}) => {
     }
 
     return (
-        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon/>}> 
+        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon/>}>
                 {!cartList.products.length &&
                     (
                         <p>No Items Available</p>
                     )
                 }
-            <div className="minicart-description">My Bag, {cartList.amount} Items</div>
+            <div className="minicart-description"><span className="my-bag">My Bag</span>, {cartList.amount} Items</div>
             {!!cartList.products.length && cartList.products.map((cartProduct, index) => (
                 <>
                     <div key={index} className="product-info">
@@ -97,7 +97,7 @@ const MiniCart = ({currency}) => {
                             <div>{cartProduct.attributes.map(function (attribute, index) {
                                         return (
                                             <div className="minicart-radio-tiles" key={index}>
-                                                {attribute.name}
+                                                {attribute.name}:
                                                 {attribute.type !=="swatch" ? 
                                                     <MiniCartAttributeText
                                                         choice={cartProduct.choices.attribute[attribute.id]}
