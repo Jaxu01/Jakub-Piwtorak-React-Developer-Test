@@ -13,7 +13,7 @@ const makeProductQuery = (cartItem) => {
             )
         )
         .addField(new Field('attributes')
-            .addFieldList(['id', 'name', 'type'])
+            .addFieldList(['id', 'name','type'])
             .addField(new Field('items')
                 .addFieldList(['displayValue', 'value', 'id'])
             )
