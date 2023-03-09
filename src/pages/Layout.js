@@ -2,7 +2,7 @@ import '../index.css';
 import Currencies from "../Currencies";
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { client, Field, Query } from "@tilework/opus";
+import { client, Query } from "@tilework/opus";
 import {ReactComponent as ReactLogo} from '../logo.svg';
 import MiniCart from '../components/MiniCart.js';
 

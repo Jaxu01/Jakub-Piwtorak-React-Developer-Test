@@ -6,12 +6,127 @@
     line-height: 40px;
     text-transform: uppercase;
     color: #1D1F22;
+    padding-bottom: 55px;
 }
 
 .bar {
-    width: 1240px;
     height: 1px;
-    left: 100px;
-    top: 255px;
     background: #E5E5E5;
+    max-width: 100%;
+    margin-bottom: 24px;
+}
+
+.cart {
+    max-width: 100%;
+    margin: 100px;
+}
+
+.image-cart {
+    display: flex;
+    width: 200px;
+    height: 280px;
+}
+
+.amount-changer-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info-cart {
+    display: grid;
+    grid-template-columns: 1fr 24px auto;
+    font-family: 'Raleway';
+    gap: 20px;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 24px 0px;
+}
+
+.plus-button-cart {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+	padding: 0;
+    font-size: 40px;
+	cursor: pointer;
+    border: 1px solid #1D1F22;
+}
+
+.minus-button-cart {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+	padding: 0;
+    font-size: 40px;
+	cursor: pointer;
+    border: 1px solid #1D1F22;
+}
+
+.information-box-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 160%;
+}
+
+.product-name-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.product-brand-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.price-cart {
+    font-weight: bold;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.minicart-radio-tiles-cart {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.product-amount-cart {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.cart-page-tile {
+    width: 63px;
+    height: 45px;
+}
+
+.cart-page-tile-swatch {
+    width: 32px;
+    height: 32px;
 }

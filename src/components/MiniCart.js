@@ -4,23 +4,16 @@ import Dropdown from "../components/Dropdown.js";
 import MiniCartAttributeText from "./MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
 import { changeProductAmount, getItems } from '../actions/minicart.js';
-import './MiniCart.css';
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
+import './MiniCart.css';
 
 const MiniCart = ({currency}) => {
     const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
     
 
     const fetchData = async(minicart) => {
-        const products = await fetchMinicartProducts(minicart, currency.label)
-        const totalPrice = products.reduce((accumulator, product) => {
-            console.log(accumulator)
-            return accumulator + (product.activePrice.amount * product.choices.amount)
-        }, 0)
-        const amount = products.reduce((accumulator, product) => {
-            return accumulator + product.choices.amount
-        }, 0)
-        setCartList({products, totalPrice, amount})
+        const {products, details} = await fetchMinicartProducts(minicart, currency.label)
+        setCartList({products, ...details})
     }
 
     const updateList = async() => {

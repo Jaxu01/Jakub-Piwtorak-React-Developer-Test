@@ -1,5 +1,7 @@
 import { client, Field, Query } from "@tilework/opus";
 
+let products = null
+
 const makeProductQuery = (cartItem) => {
     const query = new Query('product', true)
         .addArgument('id', 'String!', cartItem.productId)
@@ -26,13 +28,24 @@ const fetchProduct = async(productQuery, currencyLabel) => {
     return {...Object(product), activePrice}
 }
 
+const getTotalPrice = () => products.reduce((accumulator, product) => {
+    console.log(accumulator)
+    return accumulator + (product.activePrice.amount * product.choices.amount)
+}, 0)
+
+const getAmount = () => products.reduce((accumulator, product) => {
+    return accumulator + product.choices.amount
+}, 0)
+
 const fetchMinicartProducts = async(minicart, currencyLabel) => {
-    const products = await Promise.all(minicart.map(async(cartItem) => {
-        const productQuery = makeProductQuery(cartItem)
-        const product = await fetchProduct(productQuery, currencyLabel)
-        return {...product, choices: cartItem}
+        products = await Promise.all(minicart.map(async(cartItem) => {
+            const productQuery = makeProductQuery(cartItem)
+            const product = await fetchProduct(productQuery, currencyLabel)
+            return {...product, choices: cartItem}
     }))
-    return products
+    const details = {amount: getAmount(), totalPrice: getTotalPrice()}
+    return {products, details}
 }
+
 
 export default fetchMinicartProducts;
