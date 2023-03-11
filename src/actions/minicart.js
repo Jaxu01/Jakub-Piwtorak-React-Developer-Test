@@ -43,4 +43,5 @@ const addItem = (productChoices) => {
     setItems(itemToStore)
 }
 
+
 export {getItems, addItem, setItems, findExistingProduct, changeProductAmount}

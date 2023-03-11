@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import ProductGallery from '../components/ProductGallery.js';
 import { addItem } from '../actions/minicart.js';
 import { createNewProduct } from '../actions/product.js';
+import Price from '../components/Price.js';
 import '../productpage.css'
 
 
@@ -77,7 +78,7 @@ const ProductPage = () => {
                                 )
                             })}</h3>
                             <p>PRICE:</p>
-                            <h4>{data.activePrice.currency.symbol}{data.activePrice.amount}</h4>
+                            <h4><Price price={data.activePrice.amount}></Price></h4>
                             <input name="productId" value={param.productId} type="hidden"/>
                             <div className="cart-adding">
                                 <button>ADD TO CART</button>
