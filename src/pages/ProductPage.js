@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { client, Field, Query } from "@tilework/opus";
 import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useCurrency } from "../actions/CurrencyContext.js";
 import ProductGallery from '../components/ProductGallery.js';
 import { addItem } from '../actions/minicart.js';
 import { createNewProduct } from '../actions/product.js';
@@ -12,7 +12,7 @@ import '../productpage.css'
 const ProductPage = () => {
     const [data, setData] = useState(null);
     const param = useParams();
-    const [currency] = useOutletContext();
+    const currency = useCurrency()
     const fetchData = async() => {
         const query = new Query('product', true)
         .addArgument('id', 'String!', param.productId)

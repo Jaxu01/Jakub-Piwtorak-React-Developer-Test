@@ -3,13 +3,13 @@ import MiniCartAttributeText from "../components/MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "../components/MiniCartAttributeSwatch.js";
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
 import { getItems, changeProductAmount } from "../actions/minicart.js";
-import { usePriceFormat } from "../actions/formaters.js";
-import { useOutletContext } from "react-router-dom";
+import Price from '../components/Price.js';
+import { useCurrency } from '../actions/CurrencyContext.js';
 import './Cart.css'
 
 const Cart = () => {
     const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
-    const [currency] = useOutletContext()
+    const currency = useCurrency()
     console.log(cartList)
 
     const taxMoney = () => {
@@ -96,9 +96,9 @@ const Cart = () => {
                         ))}
                     </div>
                 <div className="final-details">
-                    <div className="tax">Tax 21%:  <span className="tax-result">{usePriceFormat(taxMoney())}</span></div>
+                    <div className="tax">Tax 21%:  <span className="tax-result"><Price price={taxMoney()}></Price></span></div>
                     <div className="quantity">Quantity: <span className="quantity-result">{cartList.amount}</span></div>
-                    <div className="total-cart">Total: <span className="total-result">{usePriceFormat(cartList.totalPrice)}</span></div>
+                    <div className="total-cart">Total: <span className="total-result"><Price price={cartList.totalPrice}></Price></span></div>
                 </div>
                 <button className="order">Order</button>
             </div>

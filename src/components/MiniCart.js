@@ -3,12 +3,15 @@ import {ReactComponent as CartIcon} from '../cartIcon.svg';
 import Dropdown from "../components/Dropdown.js";
 import MiniCartAttributeText from "./MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
+import Price from "./Price.js";
 import { changeProductAmount, getItems } from '../actions/minicart.js';
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
+import { useCurrency } from '../actions/CurrencyContext.js';
 import './MiniCart.css';
 
-const MiniCart = ({currency}) => {
+const MiniCart = () => {
     const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
+    const currency = useCurrency()
     
 
     const fetchData = async(minicart) => {
@@ -91,7 +94,7 @@ const MiniCart = ({currency}) => {
                     </div>
             ))}
             <strong className="total-cost">Total
-                <div className="total">{currency.symbol}{cartList.totalPrice}</div>
+                <div className="total"><Price price={cartList.totalPrice}></Price></div>
             </strong>
             <div className="minicart-buttons">
                 <a href="/cart" className="view-bag">view bag</a>

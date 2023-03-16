@@ -1,4 +1,5 @@
 import { client, Field, Query } from "@tilework/opus";
+import { useCurrency } from './CurrencyContext.js';
 
 let products = null
 

@@ -1,10 +1,9 @@
-import { useOutletContext } from "react-router-dom";
+import { useCurrency } from '../actions/CurrencyContext.js';
 
 const Price = ({price}) => {
-    console.log(price)
-    const [currency] = useOutletContext()
-    const formatedPrice = currency.symbol + parseFloat(price).toFixed(2)
-
+    const currency = useCurrency()
+    console.log(currency)
+    let formatedPrice = currency.symbol + parseFloat(price).toFixed(2)
     return <span>{formatedPrice}</span>
 }
 

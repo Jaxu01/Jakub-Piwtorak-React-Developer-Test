@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Query, client } from '@tilework/opus';
-import { ReactComponent as DropdownLogo} from "./dropdown.svg";
+import { useCurrency, useUpdateCurrency } from '../actions/CurrencyContext.js';
+import { ReactComponent as DropdownLogo} from "../dropdown.svg";
 
 function Currencies({activeCurrency, setCurrency}) {
-const [state, setState] = useState({
-    currencies: [],
-    dropdownOpen: false
-});
+const updateCurrency = useUpdateCurrency()
+    const [state, setState] = useState({
+        currencies: [],
+        dropdownOpen: false
+    });
 
     useEffect(() => {
         const fetchData = (async() => {
@@ -46,7 +48,7 @@ const [state, setState] = useState({
                 {state.dropdownOpen && (
                     <div className="currencies-container">
                         {state.currencies?.map((currency, index) => (
-                            <div key={index} onClick={() => setCurrency(currency)} className="currency-div">
+                            <div key={index} onClick={() => updateCurrency(currency)} className="currency-div">
                                 <p>{currency.symbol}</p>
                                 <p>{currency.label}</p>
                             </div>
