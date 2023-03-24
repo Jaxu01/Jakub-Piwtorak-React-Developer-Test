@@ -1,0 +1,40 @@
+.picture-switches {
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    gap: 8px;
+}
+
+.left-switch,
+.right-switch {
+    cursor: pointer;
+}
+
+.left-switch::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: '<';
+    height: 24px;
+    width: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.73);
+}
+
+.right-switch::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: '>';
+    height: 24px;
+    width: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.73);
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: initial;
+    opacity: 50%;
+}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MiniCartAttributeText from "../components/MiniCartAttributeText.js";
 import MiniCartAttributeSwatch from "../components/MiniCartAttributeSwatch.js";
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
+import GallerySwitcher from "../components/GallerySwitcher.js";
 import { getItems, changeProductAmount } from "../actions/minicart.js";
 import Price from '../components/Price.js';
 import { useCurrency } from '../actions/CurrencyContext.js';
@@ -90,7 +91,7 @@ const Cart = () => {
                                         </div>
                                     </div>
                                     <div className="image-cart">
-                                        <img src={cartProduct.gallery[0]}/>
+                                            <GallerySwitcher gallery={cartProduct.gallery}></GallerySwitcher>
                                     </div>
                                 </div>
                         ))}
