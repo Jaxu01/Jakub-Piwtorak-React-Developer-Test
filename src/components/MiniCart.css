@@ -119,20 +119,7 @@
     max-height: 190px;
 }
 
-.plus-button {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-	padding: 0;
-    font-size: 20px;
-	cursor: pointer;
-    border: 1px solid #1D1F22;
-    
-}
-
+.plus-button,
 .minus-button {
     width: 24px;
     height: 24px;

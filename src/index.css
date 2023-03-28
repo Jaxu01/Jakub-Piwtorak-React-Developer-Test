@@ -2,12 +2,13 @@
   font-family: 'Raleway';
   src: url(./Raleway-SemiBold.ttf) format('truetype'); 
   font-weight: semibold;
- }
+}
 
 @font-face {
   font-family: 'Raleway';
   src: url(./Raleway-Medium.ttf) format('truetype');
- }
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -114,7 +115,8 @@ svg {
   height: 36px;
 }
 
-.shopcart {
+.shopcart,
+.add-cart {
   width: 24px;
   height: 24px;
 }
@@ -194,11 +196,6 @@ label input {
 label input:checked + .radio-tile {
   background: #1D1F22;
   color: white;
-}
-
-.add-cart {
-  width: 24px;
-  height: 24px;
 }
 
 .add-cart path,
