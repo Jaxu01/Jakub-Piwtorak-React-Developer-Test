@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "./GallerySwitcher.module.css"
+import "./GallerySwitcher.css"
 
 const GallerySwitcher = ({gallery}) => {
     const [currentIndex, setCurrentIndex] = useState(0)
