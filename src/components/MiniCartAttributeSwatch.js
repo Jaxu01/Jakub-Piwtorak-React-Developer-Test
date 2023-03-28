@@ -12,4 +12,4 @@ const MiniCartAttributeSwatch = ({items, choice, className}) => {
     )
 }
 
-export default MiniCartAttributeSwatch;
+export default MiniCartAttributeSwatch

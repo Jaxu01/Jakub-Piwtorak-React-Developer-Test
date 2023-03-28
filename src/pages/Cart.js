@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import MiniCartAttributeText from "../components/MiniCartAttributeText.js";
-import MiniCartAttributeSwatch from "../components/MiniCartAttributeSwatch.js";
-import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
-import GallerySwitcher from "../components/GallerySwitcher.js";
-import { getItems, changeProductAmount } from "../actions/minicart.js";
-import Price from '../components/Price.js';
-import { useCurrency } from '../actions/CurrencyContext.js';
+import { useState, useEffect } from "react"
+import MiniCartAttributeText from "../components/MiniCartAttributeText.js"
+import MiniCartAttributeSwatch from "../components/MiniCartAttributeSwatch.js"
+import fetchMinicartProducts from "../actions/fetchMinicartProducts.js"
+import GallerySwitcher from "../components/GallerySwitcher.js"
+import { getItems, changeProductAmount } from "../actions/minicart.js"
+import Price from '../components/Price.js'
+import { useCurrency } from '../actions/CurrencyContext.js'
 import './Cart.css'
 
 const Cart = () => {
@@ -107,4 +107,4 @@ const Cart = () => {
     )
 }
 
-export default Cart;
+export default Cart

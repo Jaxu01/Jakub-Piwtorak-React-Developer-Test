@@ -13,4 +13,4 @@ const MiniCartAttributeText = ({items, choice, type, className}) => {
     )
 }
 
-export default MiniCartAttributeText;
+export default MiniCartAttributeText

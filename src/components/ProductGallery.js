@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from "react"
 
 const ProductGallery = ({gallery}) => {
-    const [featuredImage, setFeaturedImage] = useState(gallery[0]);
+    const [featuredImage, setFeaturedImage] = useState(gallery[0])
     return (
         <>
             <div className="thumbnails">
@@ -16,4 +16,4 @@ const ProductGallery = ({gallery}) => {
     )
 }
 
-export default ProductGallery;
+export default ProductGallery

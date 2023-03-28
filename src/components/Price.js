@@ -1,4 +1,4 @@
-import { useCurrency } from '../actions/CurrencyContext.js';
+import { useCurrency } from '../actions/CurrencyContext.js'
 
 const Price = ({price}) => {
     const currency = useCurrency()
@@ -7,4 +7,4 @@ const Price = ({price}) => {
     return <span>{formatedPrice}</span>
 }
 
-export default Price;
+export default Price

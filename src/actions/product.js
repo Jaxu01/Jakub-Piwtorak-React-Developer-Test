@@ -14,4 +14,4 @@ const createNewProduct = (formElement) => {
     return object
 }
 
-export {createNewProduct};
+export {createNewProduct}

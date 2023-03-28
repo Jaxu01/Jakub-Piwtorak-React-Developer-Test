@@ -1,8 +1,8 @@
-import { useState } from "react";
-import "./GallerySwitcher.css";
+import { useState } from "react"
+import "./GallerySwitcher.css"
 
 const GallerySwitcher = ({gallery}) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0)
     console.log(currentIndex)
 
     const isFirstImage = currentIndex === 0
@@ -20,4 +20,4 @@ const GallerySwitcher = ({gallery}) => {
     )
 }
 
-export default GallerySwitcher;
+export default GallerySwitcher

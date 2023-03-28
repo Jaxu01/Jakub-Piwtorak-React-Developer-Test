@@ -1,5 +1,4 @@
-import { client, Field, Query } from "@tilework/opus";
-import { useCurrency } from './CurrencyContext.js';
+import { client, Field, Query } from "@tilework/opus"
 
 let products = null
 
@@ -49,4 +48,4 @@ const fetchMinicartProducts = async(minicart, currencyLabel) => {
 }
 
 
-export default fetchMinicartProducts;
+export default fetchMinicartProducts

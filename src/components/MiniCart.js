@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import {ReactComponent as CartIcon} from '../cartIcon.svg';
-import Dropdown from "../components/Dropdown.js";
-import MiniCartAttributeText from "./MiniCartAttributeText.js";
-import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js";
-import Price from "./Price.js";
-import { changeProductAmount, getItems } from '../actions/minicart.js';
-import fetchMinicartProducts from "../actions/fetchMinicartProducts.js";
-import { useCurrency } from '../actions/CurrencyContext.js';
-import './MiniCart.css';
+import { useState, useEffect } from "react"
+import {ReactComponent as CartIcon} from '../cartIcon.svg'
+import Dropdown from "../components/Dropdown.js"
+import MiniCartAttributeText from "./MiniCartAttributeText.js"
+import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js"
+import Price from "./Price.js"
+import { changeProductAmount, getItems } from '../actions/minicart.js'
+import fetchMinicartProducts from "../actions/fetchMinicartProducts.js"
+import { useCurrency } from '../actions/CurrencyContext.js'
+import './MiniCart.css'
 
 const MiniCart = () => {
-    const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0});
+    const [cartList, setCartList] = useState({products: [], amount: 0, totalPrice: 0})
     const currency = useCurrency()
     
 
@@ -104,4 +104,4 @@ const MiniCart = () => {
     )
 }
 
-export default MiniCart;
+export default MiniCart

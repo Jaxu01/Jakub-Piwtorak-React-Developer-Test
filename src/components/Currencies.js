@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Query, client } from '@tilework/opus';
-import { useCurrency, useUpdateCurrency } from '../actions/CurrencyContext.js';
-import { ReactComponent as DropdownLogo} from "../dropdown.svg";
+import { useState, useEffect } from "react"
+import { Query, client } from '@tilework/opus'
+import { useUpdateCurrency } from '../actions/CurrencyContext.js'
+import { ReactComponent as DropdownLogo} from "../dropdown.svg"
 
-function Currencies({activeCurrency, setCurrency}) {
+function Currencies({activeCurrency}) {
 const updateCurrency = useUpdateCurrency()
     const [state, setState] = useState({
         currencies: [],
@@ -27,13 +27,6 @@ const updateCurrency = useUpdateCurrency()
         })
     }
 
-    function DropdownItem(props) {
-        return (
-            <li className="dropdownItem">
-                <a>{props.text}</a>
-            </li>
-        )
-    }
 
     return (
         <>
@@ -61,4 +54,4 @@ const updateCurrency = useUpdateCurrency()
     )
 }
 
-export default Currencies;
+export default Currencies

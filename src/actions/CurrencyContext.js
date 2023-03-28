@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext } from "react"
 
 const CurrencyUpdateContext = createContext()
 const CurrencyContext = createContext()
@@ -11,7 +11,7 @@ const useUpdateCurrency = () => {
 }
 
 const CurrencyProvider = ({children}) => {
-    const [currency, setCurrency] = useState({label: 'USD', symbol: "$"});
+    const [currency, setCurrency] = useState({label: 'USD', symbol: "$"})
     
     return (
         <CurrencyContext.Provider value={ currency }>
@@ -22,4 +22,4 @@ const CurrencyProvider = ({children}) => {
     )
 }
 
-export {CurrencyProvider, useCurrency, useUpdateCurrency};
+export {CurrencyProvider, useCurrency, useUpdateCurrency}

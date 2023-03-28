@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import './Dropdown.css';
+import { useState, useEffect } from "react"
+import './Dropdown.css'
 
 const Dropdown = ({children, title, dispatchEvent}) => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false)
 
      useEffect(() => {
         dispatchEvent && document.addEventListener(dispatchEvent, ({detail}) => {
@@ -23,4 +23,4 @@ const Dropdown = ({children, title, dispatchEvent}) => {
     )
 }
 
-export default Dropdown;
+export default Dropdown

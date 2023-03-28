@@ -1,13 +1,13 @@
-import '../index.css';
-import { useState, useEffect } from "react";
-import { client, Field, Query } from "@tilework/opus";
-import { useOutletContext, Link } from "react-router-dom";
-import { useCurrency } from '../actions/CurrencyContext.js';
-import {ReactComponent as CartLogo} from '../cartIcon.svg';
+import '../index.css'
+import { useState, useEffect } from "react"
+import { client, Field, Query } from "@tilework/opus"
+import { useOutletContext, Link } from "react-router-dom"
+import { useCurrency } from '../actions/CurrencyContext.js'
+import {ReactComponent as CartLogo} from '../cartIcon.svg'
 
 function Home() {
-  const [activeCategory, setActiveCategory] = useState(null);
-  const activeTab = useOutletContext();
+  const [activeCategory, setActiveCategory] = useState(null)
+  const activeTab = useOutletContext()
   const currency = useCurrency()
 
 
@@ -68,7 +68,7 @@ function Home() {
           ))}
         </main>
       </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

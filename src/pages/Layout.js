@@ -1,16 +1,16 @@
-import '../index.css';
-import Currencies from "../components/Currencies.js";
-import { useState, useEffect } from "react";
-import { CurrencyProvider } from '../actions/CurrencyContext.js';
-import { Outlet } from "react-router-dom";
-import { client, Query } from "@tilework/opus";
-import {ReactComponent as ReactLogo} from '../logo.svg';
-import MiniCart from '../components/MiniCart.js';
+import '../index.css'
+import Currencies from "../components/Currencies.js"
+import { useState, useEffect } from "react"
+import { CurrencyProvider } from '../actions/CurrencyContext.js'
+import { Outlet } from "react-router-dom"
+import { client, Query } from "@tilework/opus"
+import {ReactComponent as ReactLogo} from '../logo.svg'
+import MiniCart from '../components/MiniCart.js'
 
 
 function Layout() {
-    const [activeTab, setActiveTab] = useState("all");
-    const [categoryTabs, setCategoryTabs] = useState(null);
+    const [activeTab, setActiveTab] = useState("all")
+    const [categoryTabs, setCategoryTabs] = useState(null)
 
     const fetchData = async() => {
         const query = new Query('categories', true)
@@ -28,7 +28,7 @@ function Layout() {
 
 
     const handleChange = (newActiveTab) => {
-        setActiveTab(newActiveTab);
+        setActiveTab(newActiveTab)
     }
     
     return (
@@ -61,4 +61,4 @@ function Layout() {
     )
 }
 
-export default Layout;
+export default Layout
