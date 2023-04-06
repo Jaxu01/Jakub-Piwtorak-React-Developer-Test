@@ -1,7 +1,7 @@
 import { Component } from "react"
 import "./GallerySwitcher.css"
 
-export class GallerySwitcher extends Component {
+class GallerySwitcher extends Component {
     constructor(props) {
         super(props)
         this.state = {galleryIndex: 0}

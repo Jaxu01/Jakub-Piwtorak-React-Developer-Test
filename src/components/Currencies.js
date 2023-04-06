@@ -1,57 +1,55 @@
-import { useState, useEffect } from "react"
+import { Component } from "react"
 import { Query, client } from '@tilework/opus'
-import { useUpdateCurrency } from '../actions/CurrencyContext.js'
 import { ReactComponent as DropdownLogo} from "../dropdown.svg"
+import Dropdown from "./Dropdown.js"
 
-function Currencies({activeCurrency}) {
-const updateCurrency = useUpdateCurrency()
-    const [state, setState] = useState({
-        currencies: [],
-        dropdownOpen: false
-    });
-
-    useEffect(() => {
-        const fetchData = (async() => {
-            client.setEndpoint('http://localhost:4000/')
-            const query = new Query('currencies', true)
-            .addFieldList(['label', 'symbol'])
-            
-            const result = await client.post(query)
-            setState({...state, currencies: result.currencies})
-        });
-        fetchData()
-    }, []);
-    const handleDropdownOpen = () => {
-        setState((prev) => {
-            return {...state, dropdownOpen: !prev.dropdownOpen}
-        })
+class Currencies extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            currencies: []
+        }
+        this.changeCurrency = this.changeCurrency.bind(this)
     }
 
+    async componentDidMount() {
+        client.setEndpoint('http://localhost:4000/')
+        const query = new Query('currencies', true)
+        .addFieldList(['label', 'symbol'])
+        
+        const result = await client.post(query)
+        this.setState({currencies: result.currencies})
+    }
 
-    return (
-        <>
-            <div className="default-currency">
-                {activeCurrency && (
-                    <div className="active-currency">
-                        <p>{activeCurrency.symbol}</p>
-                    </div>
-                )}
+    changeCurrency(currency) {
+        document.dispatchEvent(new CustomEvent("update-global", {detail: {currency}}))
+    }
+    
+    render() {
+        const { symbol } = this.props.activeCurrency
+        const DropdownTitle = () => (
+            <div>
+                {symbol}
+                <DropdownLogo/>
             </div>
-            <div className="section-right-currencies">
-                {state.dropdownOpen && (
-                    <div className="currencies-container">
-                        {state.currencies?.map((currency, index) => (
-                            <div key={index} onClick={() => updateCurrency(currency)} className="currency-div">
-                                <p>{currency.symbol}</p>
-                                <p>{currency.label}</p>
+        )
+        return (
+            <>
+                <Dropdown title={<DropdownTitle/>}>
+                    <div className="section-right-currencies">
+                            <div className="currencies-container">
+                                {this.state.currencies?.map((currency, index) => (
+                                    <div key={index} onClick={() => this.changeCurrency(currency)} className="currency-div">
+                                        <p>{currency.symbol}</p>
+                                        <p>{currency.label}</p>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
                     </div>
-                )}
-            </div>
-            <DropdownLogo onClick={handleDropdownOpen}></DropdownLogo>
-        </>
-    )
+                </Dropdown>
+            </>
+        )
+    }
 }
 
 export default Currencies

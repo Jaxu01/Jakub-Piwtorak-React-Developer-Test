@@ -1,7 +1,7 @@
 import { Component } from "react"
 import './Dropdown.css'
 
-export class Dropdown extends Component {
+class Dropdown extends Component {
   constructor(props) {
     super(props)
     this.state = { dropdownOpen: false }

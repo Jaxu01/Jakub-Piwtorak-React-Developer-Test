@@ -1,64 +1,41 @@
 import '../index.css'
-import Currencies from "../components/Currencies.js"
-import { useState, useEffect } from "react"
+import { Component } from "react"
 import { CurrencyProvider } from '../actions/CurrencyContext.js'
 import { Outlet } from "react-router-dom"
-import { client, Query } from "@tilework/opus"
-import {ReactComponent as ReactLogo} from '../logo.svg'
-import MiniCart from '../components/MiniCart.js'
+import Navigation from '../components/Navigation.js'
+import Currencies from "../components/Currencies.js"
 
 
-function Layout() {
-    const [activeTab, setActiveTab] = useState("all")
-    const [categoryTabs, setCategoryTabs] = useState(null)
-
-    const fetchData = async() => {
-        const query = new Query('categories', true)
-            .addFieldList(['name'])
-
-        const {categories} = await client.post(query)
-        setCategoryTabs(categories)
+class Layout extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {activeTab: null}
     }
 
-    useEffect(() => {
-        (async() => {
-        await fetchData()
-        })()
-    }, [])
-
-
-    const handleChange = (newActiveTab) => {
-        setActiveTab(newActiveTab)
+    handleChange(newActiveTab) {
+        document.dispatchEvent(new CustomEvent("update-global", {detail: {activeTab: newActiveTab}}))
     }
     
-    return (
-        <CurrencyProvider>
-            <div className="App">
-            <header className="desktop">
-                <nav className="navigation">
-                <div className="section-left">
-                    {categoryTabs?.map((category, index) => (
-                        <button 
-                            className={category.name === activeTab ? 'active tab-button' : 'tab-button'}
-                            onClick={() => handleChange(category.name)} 
-                            key={index}>
-                            {category.name}
-                        </button>
-                    ))}
+    render() {
+        return (
+            <CurrencyProvider>
+                <div className="App">
+                    <header className="desktop">
+                        <Navigation
+                            currencyDropdown={
+                                <Currencies
+                                    activeCurrency={this.props.global.currency}
+                                />
+                            }
+                            activeTab={this.state.activeTab}
+                            handleChange={this.handleChange}
+                        />
+                    </header>
+                    <Outlet context={ this.state.activeTab }/>
                 </div>
-                <div className="section-middle">
-                <ReactLogo></ReactLogo>
-                </div>
-                <div className="section-right">
-                    <Currencies></Currencies>
-                    <MiniCart></MiniCart>
-                </div>
-                </nav>
-            </header>
-            <Outlet context={ activeTab }/>
-            </div>
-        </CurrencyProvider>
-    )
+            </CurrencyProvider>
+        )
+    }
 }
 
 export default Layout
