@@ -16,7 +16,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    const { children, title } = this.props
+    const { children, title, className } = this.props
     const { dropdownOpen } = this.state
     return (
       <div className="dropdown">
@@ -24,7 +24,7 @@ class Dropdown extends Component {
           {title}
         </div>
         {dropdownOpen && (
-            <div className="dropdown-content">{children}</div>
+            <div className={`dropdown-content ${!!className ? className : ""}`}>{children}</div>
         )}
       </div>
     )

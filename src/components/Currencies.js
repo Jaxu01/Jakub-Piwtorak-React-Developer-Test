@@ -2,6 +2,7 @@ import { Component } from "react"
 import { Query, client } from '@tilework/opus'
 import { ReactComponent as DropdownLogo} from "../dropdown.svg"
 import Dropdown from "./Dropdown.js"
+import "./Currencies.css"
 
 class Currencies extends Component {
     constructor(props) {

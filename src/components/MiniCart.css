@@ -14,6 +14,12 @@
     grid-template-columns: 1fr 24px auto;
     font-family: 'Raleway';
     gap: 10px;
+    width: 350px;
+    max-height: 680px;
+}
+
+.minicart {
+    border: solid;
 }
 
 .minicart-radio-tile,

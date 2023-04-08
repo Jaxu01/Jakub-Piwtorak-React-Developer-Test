@@ -45,7 +45,7 @@ const MiniCart = () => {
     }
 
     return (
-        <Dropdown dispatchEvent="minicart:set-open" title={<CartIcon/>}>
+        <Dropdown dispatchEvent="minicart:set-open" className="minicart" title={<CartIcon/>}>
                 {!cartList.products.length &&
                     (
                         <p>No Items Available</p>

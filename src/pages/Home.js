@@ -7,27 +7,35 @@ import {ReactComponent as CartLogo} from '../cartIcon.svg'
 class Home extends Component {
   constructor(props) {
     super(props)
-    this.category = {}
+    this.state = {}
   }
-
-  async componentDidUpdate() { 
-    const { activeTab } = this.props.global
-      client.setEndpoint('http://localhost:4000/')
-      const query = new Query('category', true)
-        .addArgument('input', 'CategoryInput', { title: activeTab })
-        .addField(new Field('products')
-          .addFieldList(['name', 'gallery', 'id'])
-          .addField(new Field('prices')
-              .addFieldList(['amount'])
-              .addField(new Field('currency')
-                  .addFieldList(['symbol', 'label'])
-              )
-          )
-        )
   
+  async fetchData() {
+    const { activeTab } = this.props.global
+    const query = new Query('category', true)
+      .addArgument('input', 'CategoryInput', { title: activeTab })
+      .addField(new Field('products')
+        .addFieldList(['name', 'gallery', 'id'])
+        .addField(new Field('prices')
+            .addFieldList(['amount'])
+            .addField(new Field('currency')
+                .addFieldList(['symbol', 'label'])
+            )
+        )
+      )
       const {category} = await client.post(query)
       const refinedCategory = Object(category)
-      this.category = {...refinedCategory, products: this.handleActiveCurrencyProducts(category.products)}
+      this.setState({...refinedCategory, products: this.handleActiveCurrencyProducts(category.products)})
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.global.activeTab !== this.props.global.activeTab) {
+      this.fetchData()
+    }
   }
 
   handleActiveCurrencyProducts(products) {
@@ -46,11 +54,10 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.props.global)
     return (
         <div className="App">
           <main className="product-list">
-            {this.category?.products?.map((product, index) => (
+            {this.state?.products?.map((product, index) => (
               <div className="product-hover" key={index}>
                 <Link to={`product/${product.id}`} className="product-name">
                   <img src={product.gallery[0]}></img>

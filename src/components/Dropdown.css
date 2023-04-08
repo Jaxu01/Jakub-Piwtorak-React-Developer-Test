@@ -6,7 +6,6 @@
     position: absolute;
     top: 100%;
     right: 0;
-    border: solid;
     z-index: 1;
     animation: slideDown ease 255ms;
     background: white;
@@ -14,8 +13,6 @@
     flex-direction: column;
     padding: 16px 16px;
     gap: 32px;
-    width: 350px;
-    max-height: 680px;
     overflow: auto;
 }
 
