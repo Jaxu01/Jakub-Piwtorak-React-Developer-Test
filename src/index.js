@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Router, Routes, Route } from "react-router-dom"
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import Home from './pages/Home'
@@ -24,7 +24,7 @@ class Index extends Component {
   }
   render() {
     return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<Layout global={this.state} />}>
           <Route index element={<Home global={this.state}/>} />
@@ -32,7 +32,7 @@ class Index extends Component {
           <Route path="cart" element={<Cart global={this.state}/>} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
     )
   }
 }

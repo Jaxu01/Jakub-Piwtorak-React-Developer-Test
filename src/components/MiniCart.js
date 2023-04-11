@@ -17,7 +17,7 @@ class MiniCart extends Component {
     
 
     async fetchData(minicart) {
-        const {products, details} = await fetchMinicartProducts(minicart, this.activeCurrency.label)
+        const {products, details} = await fetchMinicartProducts(minicart, this.currency.label)
         this.setState({products, ...details})
     }
 

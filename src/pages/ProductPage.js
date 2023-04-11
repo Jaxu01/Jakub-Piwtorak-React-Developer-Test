@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom"
 import { client, Field, Query } from "@tilework/opus"
-import { useState, useEffect } from "react"
-import { useCurrency } from "../actions/CurrencyContext.js"
+import { withRouter } from "react-router"
+import { Component } from "react"
 import ProductGallery from '../components/ProductGallery.js'
 import { addItem } from '../actions/minicart.js'
 import { createNewProduct } from '../actions/product.js'
@@ -9,13 +8,17 @@ import Price from '../components/Price.js'
 import '../productpage.css'
 
 
-const ProductPage = () => {
-    const [data, setData] = useState(null)
-    const param = useParams()
-    const currency = useCurrency()
-    const fetchData = async() => {
+class ProductPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = null
+        this.currency = this.props.global.currency
+        this.params = ""
+    }
+
+    async fetchData() {
         const query = new Query('product', true)
-        .addArgument('id', 'String!', param.productId)
+        .addArgument('id', 'String!', this.params.productId)
         .addFieldList(['name', 'gallery', 'description', 'brand'])
         .addField(new Field('prices')
             .addFieldList(['amount'])
@@ -30,17 +33,15 @@ const ProductPage = () => {
             )
         )
         const {product} = await client.post(query)
-        const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
-        setData({...Object(product), activePrice})
+        const activePrice = new Object(product.prices.find(price => price.currency.label === this.currency.label))
+        this.setState({...Object(product), activePrice})
     }
     
-    useEffect(() => { 
-        (async() => {
-            await fetchData()
-        })()
-    }, [])
+    async componentDidMount() {
+        await this.fetchData()
+    }
 
-    const handleSubmit = (event) => {
+    handleSubmit(event) {
         event.preventDefault()
         if(event.target.checkValidity()) {
             const newProduct = createNewProduct(event.target)
@@ -52,44 +53,46 @@ const ProductPage = () => {
         }
     }
 
-    return (
-        <>
-            {data && (
-                <div className="product-view">
-                    <ProductGallery gallery={data.gallery}></ProductGallery>
-                    <div className="product-info">
-                        <form onSubmit={handleSubmit}>
-                            <h1>{data.brand}</h1>
-                            <h2>{data.name}</h2>
-                            <h3>{data.attributes.map(function (attribute, index) {
-                                return (
-                                    <div key={index}>{attribute.name}:
-                                        {attribute.items.map(function (item, index) {
-                                            return (
-                                                    <label key={index} htmlFor={item.id}> 
-                                                        <input required value={item.value} id={item.id} name={`attribute.${attribute.name}`}  type="radio"/>
-                                                            <div className="radio-tile">
-                                                                {item.displayValue}
-                                                            </div>
-                                                    </label>
-                                            )
-                                        })}
-                                    </div>
-                                )
-                            })}</h3>
-                            <p>PRICE:</p>
-                            <h4><Price price={data.activePrice.amount}></Price></h4>
-                            <input name="productId" value={param.productId} type="hidden"/>
-                            <div className="cart-adding">
-                                <button>ADD TO CART</button>
-                            </div>
-                            <p dangerouslySetInnerHTML={{__html: data.description}}/>
-                        </form>
+    render() {
+        return (
+            <>
+                {this.state && (
+                    <div className="product-view">
+                        <ProductGallery gallery={this.state.gallery}></ProductGallery>
+                        <div className="product-info">
+                            <form onSubmit={this.handleSubmit}>
+                                <h1>{this.state.brand}</h1>
+                                <h2>{this.state.name}</h2>
+                                <h3>{this.state.attributes.map(function (attribute, index) {
+                                    return (
+                                        <div key={index}>{attribute.name}:
+                                            {attribute.items.map(function (item, index) {
+                                                return (
+                                                        <label key={index} htmlFor={item.id}> 
+                                                            <input required value={item.value} id={item.id} name={`attribute.${attribute.name}`}  type="radio"/>
+                                                                <div className="radio-tile">
+                                                                    {item.displayValue}
+                                                                </div>
+                                                        </label>
+                                                )
+                                            })}
+                                        </div>
+                                    )
+                                })}</h3>
+                                <p>PRICE:</p>
+                                <h4><Price price={this.state.activePrice.amount}></Price></h4>
+                                <input name="productId" value={this.params.productId} type="hidden"/>
+                                <div className="cart-adding">
+                                    <button>ADD TO CART</button>
+                                </div>
+                                <p dangerouslySetInnerHTML={{__html: this.state.description}}/>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )}
-        </>
+                )}
+            </>
         )
     }
+}
 
-export default ProductPage
+export default withRouter(ProductPage)

@@ -29,7 +29,6 @@ const fetchProduct = async(productQuery, currencyLabel) => {
 }
 
 const getTotalPrice = () => products.reduce((accumulator, product) => {
-    console.log(accumulator)
     return accumulator + (product.activePrice.amount * product.choices.amount)
 }, 0)
 

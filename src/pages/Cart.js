@@ -7,7 +7,7 @@ import { getItems, changeProductAmount } from "../actions/minicart.js"
 import Price from '../components/Price.js'
 import './Cart.css'
 
-class Cart extends Component({global}) {
+class Cart extends Component {
     constructor(props) {
         super(props)
         this.state = {products: [], amount: 0, totalPrice: 0}
