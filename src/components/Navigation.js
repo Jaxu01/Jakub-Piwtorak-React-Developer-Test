@@ -1,7 +1,6 @@
 import { Component } from "react"
 import { client, Query } from "@tilework/opus"
 import {ReactComponent as ReactLogo} from '../logo.svg'
-import MiniCart from '../components/MiniCart.js'
 
 class Navigation extends Component {
     constructor(props) {
@@ -17,7 +16,7 @@ class Navigation extends Component {
     }
 
     render () {
-        const { handleChange, activeTab, currencyDropdown } = this.props
+        const { handleChange, activeTab, currencyDropdown, minicart } = this.props
         return (
             <nav className="navigation">
                 <div className="section-left">
@@ -35,7 +34,7 @@ class Navigation extends Component {
                 </div>
                 <div className="section-right">
                     {currencyDropdown}
-                    <MiniCart></MiniCart>
+                    {minicart}
                 </div>
             </nav>
         )
