@@ -1,6 +1,5 @@
 import '../index.css'
 import { Component } from "react"
-import { CurrencyProvider } from '../actions/CurrencyContext.js'
 import { Outlet } from "react-router-dom"
 import Navigation from '../components/Navigation.js'
 import Currencies from "../components/Currencies.js"
@@ -19,7 +18,6 @@ class Layout extends Component {
     
     render() {
         return (
-            <CurrencyProvider>
                 <div className="App">
                     <header className="desktop">
                         <Navigation
@@ -35,7 +33,6 @@ class Layout extends Component {
                     </header>
                     <Outlet context={ this.state.activeTab }/>
                 </div>
-            </CurrencyProvider>
         )
     }
 }

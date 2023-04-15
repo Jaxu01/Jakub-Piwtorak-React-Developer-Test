@@ -3,7 +3,7 @@ import {ReactComponent as CartIcon} from '../cartIcon.svg'
 import Dropdown from "../components/Dropdown.js"
 import MiniCartAttributeText from "./MiniCartAttributeText.js"
 import MiniCartAttributeSwatch from "./MiniCartAttributeSwatch.js"
-import Price from "./Price.js"
+import priceFormat from "../helpers/priceFormat.js"
 import { changeProductAmount, getItems } from '../actions/minicart.js'
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js"
 import './MiniCart.css'
@@ -94,7 +94,7 @@ class MiniCart extends Component {
                         </div>
                 ))}
                 <strong className="total-cost">Total
-                    <div className="total"><Price price={this.state.totalPrice}></Price></div>
+                    <div className="total"> {priceFormat(this.state.totalPrice, this.currency.symbol)}</div>
                 </strong>
                 <div className="minicart-buttons">
                     <a href="/cart" className="view-bag">view bag</a>

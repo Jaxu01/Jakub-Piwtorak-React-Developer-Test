@@ -4,7 +4,7 @@ import MiniCartAttributeSwatch from "../components/MiniCartAttributeSwatch.js"
 import fetchMinicartProducts from "../actions/fetchMinicartProducts.js"
 import GallerySwitcher from "../components/GallerySwitcher.js"
 import { getItems, changeProductAmount } from "../actions/minicart.js"
-import Price from '../components/Price.js'
+import priceFormat from '../helpers/priceFormat.js'
 import './Cart.css'
 
 class Cart extends Component {
@@ -96,9 +96,9 @@ class Cart extends Component {
                             ))}
                         </div>
                     <div className="final-details">
-                        <div className="tax">Tax 21%:  <span className="tax-result"><Price price={this.taxMoney()}></Price></span></div>
+                        <div className="tax">Tax 21%:  <span className="tax-result">{priceFormat(this.taxMoney(), this.props.global.currency.symbol)}</span></div>
                         <div className="quantity">Quantity: <span className="quantity-result">{this.state.amount}</span></div>
-                        <div className="total-cart">Total: <span className="total-result"><Price price={this.state.totalPrice}></Price></span></div>
+                        <div className="total-cart">Total: <span className="total-result">{priceFormat(this.state.totalPrice, this.props.global.currency.symbol)}</span></div>
                     </div>
                     <button className="order">Order</button>
                 </div>

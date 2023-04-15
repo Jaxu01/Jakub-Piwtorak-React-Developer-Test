@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import Home from './pages/Home'
@@ -10,7 +10,7 @@ import Cart from './pages/Cart'
 import { client } from "@tilework/opus"
 
 client.setEndpoint('http://localhost:4000/')
-class Index extends Component {
+class Page extends Component {
   constructor() {
     super()
     this.state = { currency: {label: 'USD', symbol: "$"}, activeTab: "all"}
@@ -23,16 +23,9 @@ class Index extends Component {
     })
   }
   render() {
+    console.log(this.state)
     return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout global={this.state} />}>
-          <Route index element={<Home global={this.state}/>} />
-          <Route path="product/:productId" element={<ProductPage global={this.state}/>} />
-          <Route path="cart" element={<Cart global={this.state}/>} />
-        </Route>
-      </Routes>
-    </Router>
+      <this.props.component global={this.state}/>
     )
   }
 }
@@ -40,7 +33,15 @@ class Index extends Component {
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <Index></Index>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Page component={Layout}></Page>}>
+          <Route index element={<Page component={Home}></Page>}/>
+          <Route path="product/:productId" element={<Page component={ProductPage}></Page>}/>
+          <Route path="cart" element={<Page component={Cart}></Page>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode> 
 )
 

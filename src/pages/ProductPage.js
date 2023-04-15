@@ -1,10 +1,10 @@
 import { client, Field, Query } from "@tilework/opus"
-import { withRouter } from "react-router"
+import { withRouter } from "../fallback/react-router.js"
 import { Component } from "react"
 import ProductGallery from '../components/ProductGallery.js'
 import { addItem } from '../actions/minicart.js'
 import { createNewProduct } from '../actions/product.js'
-import Price from '../components/Price.js'
+import priceFormat from '../helpers/priceFormat.js'
 import '../productpage.css'
 
 
@@ -13,12 +13,12 @@ class ProductPage extends Component {
         super(props)
         this.state = null
         this.currency = this.props.global.currency
-        this.params = ""
+        this.productId = this.props.router.params.productId
     }
 
     async fetchData() {
         const query = new Query('product', true)
-        .addArgument('id', 'String!', this.params.productId)
+        .addArgument('id', 'String!', this.productId)
         .addFieldList(['name', 'gallery', 'description', 'brand'])
         .addField(new Field('prices')
             .addFieldList(['amount'])
@@ -80,8 +80,8 @@ class ProductPage extends Component {
                                     )
                                 })}</h3>
                                 <p>PRICE:</p>
-                                <h4><Price price={this.state.activePrice.amount}></Price></h4>
-                                <input name="productId" value={this.params.productId} type="hidden"/>
+                                <h4>{priceFormat(this.state.activePrice.amount, this.props.global.currency.symbol)}</h4>
+                                <input name="productId" value={this.productId} type="hidden"/>
                                 <div className="cart-adding">
                                     <button>ADD TO CART</button>
                                 </div>
