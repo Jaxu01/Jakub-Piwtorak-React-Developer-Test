@@ -33,7 +33,7 @@ class Home extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.global.activeTab !== this.props.global.activeTab) {
+    if (JSON.stringify(prevProps.global) !== JSON.stringify(this.props.global)) {
       this.fetchData()
     }
   }

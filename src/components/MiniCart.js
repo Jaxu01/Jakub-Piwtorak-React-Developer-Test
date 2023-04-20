@@ -17,9 +17,16 @@ class MiniCart extends Component {
     
 
     async fetchData(minicart) {
-        const {products, details} = await fetchMinicartProducts(minicart, this.currency.label)
+        console.log(this.props.activeCurrency.label)
+        const {products, details} = await fetchMinicartProducts(minicart, this.props.activeCurrency.label)
         this.setState({products, ...details})
     }
+
+    async componentDidUpdate(prevProps) {
+        if (JSON.stringify(prevProps.currency) !== JSON.stringify(this.props.activeCurrency)) {
+        //   this.updateList()
+        }
+      }
 
     async updateList() {
         const minicart = getItems()
@@ -32,7 +39,7 @@ class MiniCart extends Component {
     }
 
     async componentDidMount() {
-        document.addEventListener("minicart:update", () => {
+        document.addEventListener("update-global", () => {
             this.updateList()
         })
         await this.updateList()
@@ -44,6 +51,7 @@ class MiniCart extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <Dropdown dispatchEvent="minicart:set-open" className="minicart" title={<CartIcon/>}>
                     {!this.state.products.length &&
@@ -94,7 +102,7 @@ class MiniCart extends Component {
                         </div>
                 ))}
                 <strong className="total-cost">Total
-                    <div className="total"> {priceFormat(this.state.totalPrice, this.currency.symbol)}</div>
+                    <div className="total"> {priceFormat(this.state.totalPrice, this.props.activeCurrency.symbol)}</div>
                 </strong>
                 <div className="minicart-buttons">
                     <a href="/cart" className="view-bag">view bag</a>

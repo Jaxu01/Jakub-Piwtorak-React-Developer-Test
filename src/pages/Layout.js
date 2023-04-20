@@ -9,29 +9,38 @@ import MiniCart from '../components/MiniCart.js'
 class Layout extends Component {
     constructor(props) {
         super(props)
-        this.state = {activeTab: null}
+        this.state = { currency: {label: 'USD', symbol: "$"}, activeTab: "all" }
     }
 
     handleChange(newActiveTab) {
         document.dispatchEvent(new CustomEvent("update-global", {detail: {activeTab: newActiveTab}}))
     }
-    
+
+  componentDidMount() {
+    document.addEventListener("update-global", ({detail}) => {
+      this.setState((state) => {
+        return {...state, ...detail}
+      })
+    })
+  }
+
     render() {
+        const Pagecomponent = this.props.component
         return (
                 <div className="App">
                     <header className="desktop">
                         <Navigation
                             currencyDropdown={
                                 <Currencies
-                                    activeCurrency={this.props.global.currency}
+                                    activeCurrency={this.state.currency}
                                 />
                             }
-                            minicart={<MiniCart activeCurrency={this.props.global.currency}></MiniCart>}
+                            minicart={<MiniCart activeCurrency={this.state.currency}></MiniCart>}
                             activeTab={this.state.activeTab}
                             handleChange={this.handleChange}
                         />
                     </header>
-                    <Outlet context={ this.state.activeTab }/>
+                    <Pagecomponent global={ this.state }/>
                 </div>
         )
     }
