@@ -15,18 +15,10 @@ class MiniCart extends Component {
         this.currency = this.props.activeCurrency
     }
     
-
     async fetchData(minicart) {
-        console.log(this.props.activeCurrency.label)
         const {products, details} = await fetchMinicartProducts(minicart, this.props.activeCurrency.label)
         this.setState({products, ...details})
     }
-
-    async componentDidUpdate(prevProps) {
-        if (JSON.stringify(prevProps.currency) !== JSON.stringify(this.props.activeCurrency)) {
-        //   this.updateList()
-        }
-      }
 
     async updateList() {
         const minicart = getItems()
@@ -38,10 +30,13 @@ class MiniCart extends Component {
         }
     }
 
+    async componentDidUpdate(prevProps) {
+        if (prevProps.activeCurrency.label !== this.props.activeCurrency.label) {
+            await this.updateList()
+        }
+    }
+
     async componentDidMount() {
-        document.addEventListener("update-global", () => {
-            this.updateList()
-        })
         await this.updateList()
     }
 
@@ -51,7 +46,6 @@ class MiniCart extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Dropdown dispatchEvent="minicart:set-open" className="minicart" title={<CartIcon/>}>
                     {!this.state.products.length &&

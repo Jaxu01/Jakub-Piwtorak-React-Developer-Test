@@ -15,15 +15,19 @@ class Navigation extends Component {
         this.setState({categoryTabs: categories})
     }
 
+    handleChange(newActiveTab) {
+        document.dispatchEvent(new CustomEvent("update-global", {detail: {activeTab: newActiveTab}}))
+    }
+
     render () {
-        const { handleChange, activeTab, currencyDropdown, minicart } = this.props
+        const { activeTab, currencyDropdown, minicart } = this.props
         return (
             <nav className="navigation">
                 <div className="section-left">
                     {this.state.categoryTabs?.map((category, index) => (
                         <button 
                             className={category.name === activeTab ? 'active tab-button' : 'tab-button'}
-                            onClick={() => handleChange(category.name)} 
+                            onClick={() => this.handleChange(category.name)}
                             key={index}>
                             {category.name}
                         </button>

@@ -41,6 +41,16 @@ class ProductPage extends Component {
         await this.fetchData()
     }
 
+    async componentDidUpdate(prevProps) {
+        if (prevProps.global.currency.label !== this.props.global.currency.label) {
+            this.setState((state) => {
+                const activePrice = new Object(state.prices.find(price => price.currency.label === this.props.global.currency.label))
+                console.log(activePrice)
+                return {...state, activePrice}
+            })
+        }
+    }
+
     handleSubmit(event) {
         event.preventDefault()
         if(event.target.checkValidity()) {
