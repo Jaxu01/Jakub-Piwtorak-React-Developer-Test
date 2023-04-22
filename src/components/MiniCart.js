@@ -37,6 +37,9 @@ class MiniCart extends Component {
     }
 
     async componentDidMount() {
+        document.addEventListener("minicart:update", () => {
+            this.updateList()
+        })
         await this.updateList()
     }
 
@@ -48,11 +51,11 @@ class MiniCart extends Component {
     render() {
         return (
             <Dropdown dispatchEvent="minicart:set-open" className="minicart" title={<CartIcon/>}>
-                    {!this.state.products.length &&
-                        (
-                            <p>No Items Available</p>
-                        )
-                    }
+                {!this.state.products.length &&
+                    (
+                        <p>No Items Available</p>
+                    )
+                }
                 <div className="minicart-description"><span className="my-bag">My Bag</span>, {this.state.amount} Items</div>
                 {!!this.state.products.length && this.state.products.map((cartProduct, index) => (
                         <div key={index} className="product-info">
