@@ -35,20 +35,18 @@ class Currencies extends Component {
             </div>
         )
         return (
-            <>
-                <Dropdown title={<DropdownTitle/>}>
-                    <div className="section-right-currencies">
-                            <div className="currencies-container">
-                                {this.state.currencies?.map((currency, index) => (
-                                    <div key={index} onClick={() => this.changeCurrency(currency)} className="currency-div">
-                                        <p>{currency.symbol}</p>
-                                        <p>{currency.label}</p>
-                                    </div>
-                                ))}
+            <Dropdown title={<DropdownTitle/>}>
+                <div className="section-right-currencies">
+                    <div className="currencies-container">
+                        {this.state.currencies?.map((currency, index) => (
+                            <div key={index} onClick={() => this.changeCurrency(currency)} className="currency-div">
+                                <p>{currency.symbol}</p>
+                                <p>{currency.label}</p>
                             </div>
+                        ))}
                     </div>
-                </Dropdown>
-            </>
+                </div>
+            </Dropdown>
         )
     }
 }

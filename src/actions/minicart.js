@@ -12,12 +12,12 @@ const changeProductAmount = (productChoices, change) => {
     const miniCart = getItems()
     const existingProduct = findExistingProduct(miniCart, productChoices)
     let itemToStore = []
-    if(existingProduct) {
+    if (existingProduct) {
         itemToStore = miniCart.map((item) => {
-            if(JSON.stringify(item) === JSON.stringify(existingProduct)) {
+            if (JSON.stringify(item) === JSON.stringify(existingProduct)) {
                 item.amount = item.amount + change
             }
-                return item
+            return item
         })
         itemToStore = itemToStore.filter(item => item.amount > 0)
     }
@@ -28,9 +28,9 @@ const addItem = (productChoices) => {
     const miniCart = getItems()
     const existingProduct = findExistingProduct(miniCart, productChoices)
     let itemToStore = []
-    if(existingProduct) {
+    if (existingProduct) {
         itemToStore = miniCart.map(item => {
-            if(JSON.stringify(item) === JSON.stringify(existingProduct)) {
+            if (JSON.stringify(item) === JSON.stringify(existingProduct)) {
                 item.amount++
             }
             return item

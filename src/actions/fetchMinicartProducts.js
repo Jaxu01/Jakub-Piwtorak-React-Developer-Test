@@ -37,10 +37,10 @@ const getAmount = () => products.reduce((accumulator, product) => {
 }, 0)
 
 const fetchMinicartProducts = async(minicart, currencyLabel) => {
-        products = await Promise.all(minicart.map(async(cartItem) => {
-            const productQuery = makeProductQuery(cartItem)
-            const product = await fetchProduct(productQuery, currencyLabel)
-            return {...product, choices: cartItem}
+    products = await Promise.all(minicart.map(async(cartItem) => {
+        const productQuery = makeProductQuery(cartItem)
+        const product = await fetchProduct(productQuery, currencyLabel)
+        return {...product, choices: cartItem}
     }))
     const details = {amount: getAmount(), totalPrice: getTotalPrice()}
     return {products, details}

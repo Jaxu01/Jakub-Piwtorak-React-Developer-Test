@@ -5,7 +5,7 @@ import ProductGallery from '../components/ProductGallery.js'
 import { addItem } from '../actions/minicart.js'
 import { createNewProduct } from '../actions/product.js'
 import priceFormat from '../helpers/priceFormat.js'
-import '../productpage.css'
+import './ProductPage.css'
 
 
 class ProductPage extends Component {
@@ -78,12 +78,12 @@ class ProductPage extends Component {
                                         <div key={index}>{attribute.name}:
                                             {attribute.items.map(function (item, index) {
                                                 return (
-                                                        <label key={index} htmlFor={item.id}> 
-                                                            <input required value={item.value} id={item.id} name={`attribute.${attribute.name}`}  type="radio"/>
-                                                                <div className="radio-tile">
-                                                                    {item.displayValue}
-                                                                </div>
-                                                        </label>
+                                                    <label key={index} htmlFor={item.id}> 
+                                                        <input required value={item.value} id={item.id} name={`attribute.${attribute.name}`}  type="radio"/>
+                                                            <div className="radio-tile">
+                                                                {item.displayValue}
+                                                            </div>
+                                                    </label>
                                                 )
                                             })}
                                         </div>

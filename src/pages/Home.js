@@ -41,13 +41,11 @@ class Home extends Component {
   handleActiveCurrencyProducts(products) {
     const productList = []
     const { currency } = this.props.global
-
-
     products.forEach(product => {
         const activePrice = new Object(product.prices.find(price => price.currency.label === currency.label))
-        productList.push({
+        productList.push ({
           ...product,
-        activePrice
+          activePrice
         })
     })
     return productList
@@ -55,23 +53,23 @@ class Home extends Component {
 
   render() {
     return (
-        <div className="App">
-          <main className="product-list">
-            {this.state?.products?.map((product, index) => (
-              <div className="product-hover" key={index}>
-                <Link to={`product/${product.id}`} className="product-name">
-                  <img src={product.gallery[0]}></img>
-                  <div className="circle">
-                    <CartLogo className="add-cart white"></CartLogo>
-                  </div>
-                  <p>{product.name}</p>
-                  <p>{product.product}</p>
-                  <p>{product.activePrice.currency.symbol}{product.activePrice.amount}</p>
-                </Link>
-              </div>
-            ))}
-          </main>
-        </div>
+      <div className="App">
+        <main className="product-list">
+          {this.state?.products?.map((product, index) => (
+            <div className="product-hover" key={index}>
+              <Link to={`product/${product.id}`} className="product-name">
+                <img src={product.gallery[0]}></img>
+                <div className="circle">
+                  <CartLogo className="add-cart white"></CartLogo>
+                </div>
+                <p>{product.name}</p>
+                <p>{product.product}</p>
+                <p>{product.activePrice.currency.symbol}{product.activePrice.amount}</p>
+              </Link>
+            </div>
+          ))}
+        </main>
+      </div>
     )
   }
 }

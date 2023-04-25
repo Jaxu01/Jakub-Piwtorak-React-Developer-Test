@@ -6,10 +6,10 @@ import MiniCart from '../components/MiniCart.js'
 
 
 class Layout extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { currency: {label: 'USD', symbol: "$"}, activeTab: "all" }
-    }
+  constructor(props) {
+    super(props)
+    this.state = { currency: {label: 'USD', symbol: "$"}, activeTab: "all" }
+  }
 
   componentDidMount() {
     document.addEventListener("update-global", ({detail}) => {
@@ -19,25 +19,25 @@ class Layout extends Component {
     })
   }
 
-    render() {
-        const Pagecomponent = this.props.component
-        return (
-                <div className="App">
-                    <header className="desktop">
-                        <Navigation
-                            currencyDropdown={
-                                <Currencies
-                                    activeCurrency={this.state.currency}
-                                />
-                            }
-                            minicart={<MiniCart activeCurrency={this.state.currency}></MiniCart>}
-                            activeTab={this.state.activeTab}
-                        />
-                    </header>
-                    <Pagecomponent global={ this.state }/>
-                </div>
-        )
-    }
+  render() {
+    const Pagecomponent = this.props.component
+    return (
+      <div className="App">
+        <header className="desktop">
+          <Navigation
+            currencyDropdown={
+              <Currencies
+                activeCurrency={this.state.currency}
+              />
+            }
+            minicart={<MiniCart activeCurrency={this.state.currency}></MiniCart>}
+            activeTab={this.state.activeTab}
+          />
+        </header>
+        <Pagecomponent global={ this.state }/>
+      </div>
+    )
+  }
 }
 
 export default Layout

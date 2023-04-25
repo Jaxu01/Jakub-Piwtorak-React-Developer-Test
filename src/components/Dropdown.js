@@ -24,7 +24,7 @@ class Dropdown extends Component {
           {title}
         </div>
         {dropdownOpen && (
-            <div className={`dropdown-content ${!!className ? className : ""}`}>{children}</div>
+          <div className={`dropdown-content ${!!className ? className : ""}`}>{children}</div>
         )}
       </div>
     )

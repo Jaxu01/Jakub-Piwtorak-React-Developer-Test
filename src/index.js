@@ -16,12 +16,12 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-          <Route index element={<Layout component={Home}></Layout>}/>
-          <Route path="product/:productId" element={<Layout component={ProductPage}></Layout>}/>
-          <Route path="cart" element={<Layout component={Cart}></Layout>}/>
+        <Route index element={<Layout component={Home}></Layout>}/>
+        <Route path="product/:productId" element={<Layout component={ProductPage}></Layout>}/>
+        <Route path="cart" element={<Layout component={Cart}></Layout>}/>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode> 
+  </React.StrictMode>
 )
 
 reportWebVitals()

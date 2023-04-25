@@ -8,8 +8,7 @@ class MiniCartAttributeSwatch extends Component {
             <div>
                 {items.map((item, index) => (
                     <label key={index} htmlFor={item.id} style={{backgroundColor: item.value}}> 
-                            <div className={`${className} ${choice === item.value ? "minicart-swatch-tile-active" : "minicart-swatch-tile"}`}>
-                            </div>
+                        <div className={`${className} ${choice === item.value ? "minicart-swatch-tile-active" : "minicart-swatch-tile"}`}></div>
                     </label>
                 ))}
             </div>
