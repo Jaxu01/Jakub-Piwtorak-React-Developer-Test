@@ -36,13 +36,19 @@ class Cart extends Component {
     
     async fetchData() {
         const minicart = getItems()
-        const {products, details} = await fetchMinicartProducts(minicart, this.currency.label)
+        const {products, details} = await fetchMinicartProducts(minicart, this.props.global.currency.label)
         this.setState({products, ...details})
     }
 
     async componentDidMount() {
         await this.fetchData()
-    } 
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (prevProps.global.currency.label !== this.props.global.currency.label) {
+            this.updateList()
+        }
+    }
 
     render() {
         return (
