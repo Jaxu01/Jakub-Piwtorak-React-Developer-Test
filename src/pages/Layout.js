@@ -8,7 +8,7 @@ import MiniCart from '../components/MiniCart.js'
 class Layout extends Component {
   constructor(props) {
     super(props)
-    this.state = { currency: {label: 'USD', symbol: "$"}, activeTab: "all" }
+    this.state = { currency: {label: 'USD', symbol: "$"}}
   }
 
   componentDidMount() {
@@ -31,7 +31,6 @@ class Layout extends Component {
               />
             }
             minicart={<MiniCart activeCurrency={this.state.currency}></MiniCart>}
-            activeTab={this.state.activeTab}
           />
         </header>
         <Pagecomponent global={ this.state }/>

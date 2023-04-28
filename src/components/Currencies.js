@@ -35,7 +35,7 @@ class Currencies extends Component {
             </div>
         )
         return (
-            <Dropdown title={<DropdownTitle/>}>
+            <Dropdown className="currencies-dropdown" title={<DropdownTitle/>}>
                 <div className="section-right-currencies">
                     <div className="currencies-container">
                         {this.state.currencies?.map((currency, index) => (

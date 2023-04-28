@@ -1,5 +1,6 @@
 import { Component } from "react"
 import { client, Query } from "@tilework/opus"
+import { NavLink } from "react-router-dom";
 import {ReactComponent as ReactLogo} from '../logo.svg'
 
 class Navigation extends Component {
@@ -15,22 +16,18 @@ class Navigation extends Component {
         this.setState({categoryTabs: categories})
     }
 
-    handleChange(newActiveTab) {
-        document.dispatchEvent(new CustomEvent("update-global", {detail: {activeTab: newActiveTab}}))
-    }
-
     render () {
-        const { activeTab, currencyDropdown, minicart } = this.props
+        const { currencyDropdown, minicart } = this.props
         return (
             <nav className="navigation">
                 <div className="section-left">
                     {this.state.categoryTabs?.map((category, index) => (
-                        <button 
-                            className={category.name === activeTab ? 'active tab-button' : 'tab-button'}
-                            onClick={() => this.handleChange(category.name)}
+                        <NavLink
+                            className={({isActive}) => isActive ? 'active tab-button' : 'tab-button'}
+                            to={`/${category.name}`}
                             key={index}>
                             {category.name}
-                        </button>
+                        </NavLink>
                     ))}
                 </div>
                 <div className="section-middle">

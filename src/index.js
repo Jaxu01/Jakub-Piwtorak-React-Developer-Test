@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom"
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 import Home from './pages/Home'
@@ -16,7 +16,8 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<Layout component={Home}></Layout>}/>
+        <Route index path="/" element={<Navigate to="/all" replace/>}/>
+        <Route path=":listId" element={<Layout component={Home}></Layout>}/>
         <Route path="product/:productId" element={<Layout component={ProductPage}></Layout>}/>
         <Route path="cart" element={<Layout component={Cart}></Layout>}/>
       </Routes>

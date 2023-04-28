@@ -2,6 +2,7 @@ import '../index.css'
 import { Component } from "react"
 import { client, Field, Query } from "@tilework/opus"
 import { Link } from "react-router-dom"
+import { withRouter } from "../fallback/react-router.js"
 import {ReactComponent as CartLogo} from '../cartIcon.svg'
 
 class Home extends Component {
@@ -11,9 +12,9 @@ class Home extends Component {
   }
   
   async fetchData() {
-    const { activeTab } = this.props.global
+    const listId = this.props.router.params.listId
     const query = new Query('category', true)
-      .addArgument('input', 'CategoryInput', { title: activeTab })
+      .addArgument('input', 'CategoryInput', { title: listId })
       .addField(new Field('products')
         .addFieldList(['name', 'gallery', 'id'])
         .addField(new Field('prices')
@@ -33,7 +34,8 @@ class Home extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (JSON.stringify(prevProps.global) !== JSON.stringify(this.props.global)) {
+    console.log(1)
+    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.fetchData()
     }
   }
@@ -57,7 +59,7 @@ class Home extends Component {
         <main className="product-list">
           {this.state?.products?.map((product, index) => (
             <div className="product-hover" key={index}>
-              <Link to={`product/${product.id}`} className="product-name">
+              <Link to={`/product/${product.id}`} className="product-name">
                 <img src={product.gallery[0]}></img>
                 <div className="circle">
                   <CartLogo className="add-cart white"></CartLogo>
@@ -74,4 +76,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default withRouter(Home)

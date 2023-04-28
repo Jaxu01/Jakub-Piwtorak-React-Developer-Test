@@ -2,13 +2,14 @@
   display: grid;
   grid-template-columns: 1fr 5fr 2fr;
   font-family: 'Raleway';
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   grid-gap: 20px;
 }
   
 .product-view .images {
   display: grid;
+  margin-bottom: 10px;
   grid-column: 1/1;
 }
   
@@ -55,7 +56,6 @@
 .thumbnails {
   width: 80px;
   height: 80px;
-  margin-left: 100px;
 }
 
 .cart-adding button {

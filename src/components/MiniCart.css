@@ -18,7 +18,7 @@
     max-height: 680px;
 }
 
-.minicart {
+.minicart .dropdown-content {
     border: solid;
     padding: 16px 16px;
 }

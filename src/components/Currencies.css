@@ -3,6 +3,17 @@
   z-index: 1;
 }
 
+.currencies-dropdown:has(.dropdown-content) .dropdown-title svg {
+  transform: rotate(180deg);
+  transition: 200ms;
+}
+
+.dropdown-title div {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
 .currencies-container {
   animation: slideDown ease 255ms;
   background: white;

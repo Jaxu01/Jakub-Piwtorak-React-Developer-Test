@@ -19,12 +19,12 @@ class Dropdown extends Component {
     const { children, title, className } = this.props
     const { dropdownOpen } = this.state
     return (
-      <div className="dropdown">
+      <div className={`dropdown ${className ? className : ""}`}>
         <div className="dropdown-title" onClick={() => this.setState((state) => ({ dropdownOpen: !state.dropdownOpen }))}>
           {title}
         </div>
         {dropdownOpen && (
-          <div className={`dropdown-content ${!!className ? className : ""}`}>{children}</div>
+          <div className="dropdown-content" >{children}</div>
         )}
       </div>
     )
