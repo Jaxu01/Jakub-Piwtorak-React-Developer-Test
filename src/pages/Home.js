@@ -16,7 +16,7 @@ class Home extends Component {
     const query = new Query('category', true)
       .addArgument('input', 'CategoryInput', { title: listId })
       .addField(new Field('products')
-        .addFieldList(['name', 'gallery', 'id'])
+        .addFieldList(['name', 'gallery', 'id', 'category'])
         .addField(new Field('prices')
             .addFieldList(['amount'])
             .addField(new Field('currency')
@@ -59,7 +59,7 @@ class Home extends Component {
         <main className="product-list">
           {this.state?.products?.map((product, index) => (
             <div className="product-hover" key={index}>
-              <Link to={`/product/${product.id}`} className="product-name">
+              <Link to={`/${product.category}/${product.id}`} className="product-name">
                 <img src={product.gallery[0]}></img>
                 <div className="circle">
                   <CartLogo className="add-cart white"></CartLogo>

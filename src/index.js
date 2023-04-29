@@ -18,7 +18,7 @@ root.render(
       <Routes>
         <Route index path="/" element={<Navigate to="/all" replace/>}/>
         <Route path=":listId" element={<Layout component={Home}></Layout>}/>
-        <Route path="product/:productId" element={<Layout component={ProductPage}></Layout>}/>
+        <Route path=":categoryId/:productId" element={<Layout component={ProductPage}></Layout>}/>
         <Route path="cart" element={<Layout component={Cart}></Layout>}/>
       </Routes>
     </BrowserRouter>

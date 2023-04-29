@@ -2,6 +2,7 @@ import { Component } from "react"
 import { client, Query } from "@tilework/opus"
 import { NavLink } from "react-router-dom";
 import {ReactComponent as ReactLogo} from '../logo.svg'
+import "./Navigation.css"
 
 class Navigation extends Component {
     constructor(props) {
