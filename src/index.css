@@ -43,6 +43,7 @@ button {
 	cursor: pointer;
 	outline: inherit;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .active {
