@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Raleway';
-  src: url(./Raleway-SemiBold.ttf) format('truetype'); 
+  src: url(./Raleway-SemiBold.ttf) format('truetype');
   font-weight: semibold;
 }
 
@@ -50,7 +50,7 @@ main {
 }
 
 .product-hover {
-  flex-direction: column;
+  position: relative;
   padding: 16px;
 }
 
@@ -59,7 +59,7 @@ main {
   transition: 300ms;
 }
 
-main > * {
+main>* {
   min-width: 0px;
 }
 
@@ -100,7 +100,7 @@ label input {
   padding: 10px;
 }
 
-label input:checked + .radio-tile {
+label input:checked+.radio-tile {
   background: #1D1F22;
   color: white;
 }
@@ -112,14 +112,20 @@ label input:checked + .radio-tile {
 }
 
 .circle {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.8s;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
   background-color: #5ECE7B;
   border-radius: 100%;
-  position: absolute;
   right: 0;
+}
+
+.product-hover:hover .circle {
   transform: translateY(-50%);
+  opacity: 1;
 }

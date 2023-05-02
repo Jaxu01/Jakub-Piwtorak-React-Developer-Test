@@ -76,6 +76,7 @@ class ProductPage extends Component {
                                 <h3>{this.state.attributes.map(function (attribute, index) {
                                     return (
                                         <div key={index}>{attribute.name}:
+                                        <br></br>
                                             {attribute.items.map(function (item, index) {
                                                 return (
                                                     <label key={index} htmlFor={item.id}> 
