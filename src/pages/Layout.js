@@ -3,18 +3,21 @@ import { Component } from "react"
 import Navigation from '../components/Navigation.js'
 import Currencies from "../components/Currencies.js"
 import MiniCart from '../components/MiniCart.js'
+import { getItems, setItems } from '../actions/global.js'
 
 
 class Layout extends Component {
   constructor(props) {
     super(props)
-    this.state = { currency: {label: 'USD', symbol: "$"}}
+    this.state = getItems()
   }
 
   componentDidMount() {
     document.addEventListener("update-global", ({detail}) => {
       this.setState((state) => {
-        return {...state, ...detail}
+        const newState = {...state, ...detail}
+        setItems(newState)
+        return newState
       })
     })
   }

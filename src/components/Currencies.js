@@ -39,7 +39,7 @@ class Currencies extends Component {
                 <div className="section-right-currencies">
                     <div className="currencies-container">
                         {this.state.currencies?.map((currency, index) => (
-                            <div key={index} onMouseOver={() => this.changeCurrency(currency)} onClick={() => this.changeCurrency(currency)} className="currency-div">
+                            <div key={index} onClick={() => this.changeCurrency(currency)} className="currency-div">
                                 <p>{currency.symbol}</p>
                                 <p>{currency.label}</p>
                             </div>

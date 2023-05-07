@@ -1,3 +1,5 @@
+import { objectCompare } from "../utils/helpers.js"
+
 const getItems = () => JSON.parse(localStorage.getItem("minicart")) ?? []
 
 const setItems = (itemToStore) => {
@@ -5,16 +7,16 @@ const setItems = (itemToStore) => {
 }
 
 const findExistingProduct = (miniCart, newItem) => {
-    return miniCart.find(product => product.productId === newItem.productId && JSON.stringify(product.attribute) === JSON.stringify(newItem.attribute))
+    return miniCart.find(product => product.productId === newItem.productId && objectCompare(product.attribute, newItem.attribute))
 }
 
-const changeProductAmount = (productChoices, change) => {
+const changeProductAmount = (newItem, change) => {
     const miniCart = getItems()
-    const existingProduct = findExistingProduct(miniCart, productChoices)
+    const existingProduct = findExistingProduct(miniCart, newItem)
     let itemToStore = []
     if (existingProduct) {
         itemToStore = miniCart.map((item) => {
-            if (JSON.stringify(item) === JSON.stringify(existingProduct)) {
+            if (objectCompare(item, existingProduct)) {
                 item.amount = item.amount + change
             }
             return item
@@ -24,9 +26,9 @@ const changeProductAmount = (productChoices, change) => {
     setItems(itemToStore)
 }
 
-const addItem = (productChoices) => {
+const addItem = (newItem) => {
     const miniCart = getItems()
-    const existingProduct = findExistingProduct(miniCart, productChoices)
+    const existingProduct = findExistingProduct(miniCart, newItem)
     let itemToStore = []
     if (existingProduct) {
         itemToStore = miniCart.map(item => {
@@ -37,8 +39,8 @@ const addItem = (productChoices) => {
         })
     }
     else {
-        productChoices.amount = 1
-        itemToStore = [...miniCart, productChoices]
+        newItem.amount = 1
+        itemToStore = [...miniCart, newItem]
     }
     setItems(itemToStore)
 }
