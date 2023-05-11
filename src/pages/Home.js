@@ -4,6 +4,7 @@ import { client, Field, Query } from "@tilework/opus"
 import { Link } from "react-router-dom"
 import { withRouter } from "../fallback/react-router.js"
 import {ReactComponent as CartLogo} from '../cartIcon.svg'
+import styled from "styled-components"
 
 class Home extends Component {
   constructor(props) {
@@ -54,11 +55,23 @@ class Home extends Component {
   }
 
   render() {
+    const ProductHover = styled.div`
+      position: relative;
+      padding: 16px;
+      &:hover {
+        box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+        transition: 300ms;
+      }
+      &:hover .circle {
+        transform: translateY(-50%);
+        opacity: 1;
+      }
+    `
     return (
       <div className="App">
         <main className="product-list">
           {this.state?.products?.map((product, index) => (
-            <div className="product-hover" key={index}>
+            <ProductHover key={index}>
               <Link to={`/${product.category}/${product.id}`} className="product-name">
                 <img src={product.gallery[0]}></img>
                 <div className="circle">
@@ -68,7 +81,7 @@ class Home extends Component {
                 <p>{product.product}</p>
                 <p>{product.activePrice.currency.symbol}{product.activePrice.amount}</p>
               </Link>
-            </div>
+            </ProductHover>
           ))}
         </main>
       </div>
