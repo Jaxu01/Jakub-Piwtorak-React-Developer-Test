@@ -1,22 +1,3 @@
-.product-view {
-  display: grid;
-  grid-template-columns: 1fr 5fr 2fr;
-  font-family: 'Raleway';
-  max-width: 1240px;
-  margin: 0 auto;
-  grid-gap: 20px;
-}
-  
-.product-view .images {
-  display: grid;
-  margin-bottom: 10px;
-  grid-column: 1/1;
-}
-  
-.product-view .product-info {
-  padding: 0 100px 0 0;
-}
-
 .featured-picture {
   width: 610px;
   height: 511px;
@@ -69,4 +50,9 @@
 
 .thumbnails:hover + .featured-picture {
   display: inline;
+}
+
+.images {
+  display: grid;
+  margin-bottom: 10px;
 }

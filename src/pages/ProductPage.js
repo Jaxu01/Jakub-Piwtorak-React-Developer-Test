@@ -5,6 +5,7 @@ import ProductGallery from '../components/ProductGallery.js'
 import { addItem } from '../actions/minicart.js'
 import { createNewProduct } from '../actions/product.js'
 import priceFormat from '../helpers/priceFormat.js'
+import styled from "styled-components"
 import './ProductPage.css'
 
 
@@ -64,12 +65,24 @@ class ProductPage extends Component {
     }
 
     render() {
+        const ProductView = styled.div`
+            display: grid;
+            grid-template-columns: 1fr 5fr 2fr;
+            font-family: 'Raleway';
+            max-width: 1240px;
+            margin: 0 auto;
+            grid-gap: 20px;
+        `
+        const ProductInfo = styled.div`
+            padding: 0 100px 0 0;
+        `
+
         return (
             <>
                 {this.state && (
-                    <div className="product-view">
+                    <ProductView>
                         <ProductGallery gallery={this.state.gallery}></ProductGallery>
-                        <div className="product-info">
+                        <ProductInfo>
                             <form onSubmit={this.handleSubmit}>
                                 <h1>{this.state.brand}</h1>
                                 <h2>{this.state.name}</h2>
@@ -98,8 +111,8 @@ class ProductPage extends Component {
                                 </div>
                                 <p dangerouslySetInnerHTML={{__html: this.state.description}}/>
                             </form>
-                        </div>
-                    </div>
+                        </ProductInfo>
+                    </ProductView>
                 )}
             </>
         )

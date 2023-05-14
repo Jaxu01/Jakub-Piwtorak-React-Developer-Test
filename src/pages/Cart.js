@@ -5,6 +5,7 @@ import fetchMinicartProducts from "../actions/fetchMinicartProducts.js"
 import GallerySwitcher from "../components/GallerySwitcher.js"
 import { getItems, changeProductAmount } from "../actions/minicart.js"
 import priceFormat from '../helpers/priceFormat.js'
+import styled from "styled-components"
 import './Cart.css'
 
 class Cart extends Component {
@@ -51,14 +52,44 @@ class Cart extends Component {
     }
 
     render() {
+        const Cart = styled.div`
+            max-width: 100%;
+            margin: 100px;
+        `
+        const CartName = styled.div`
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 40px;
+            text-transform: uppercase;
+            color: #1D1F22;
+            padding-bottom: 55px;
+        `
+        const Bar = styled.div`
+            height: 1px;
+            background: #E5E5E5;
+            max-width: 100%;
+        `
+        const InformationBoxCart = styled.div`
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 160%;
+        `
         return (
-            <div className="cart">
-                <div className="cart-name">Cart</div>
-                <div className="bar"></div>
+            <Cart>
+                <CartName>Cart</CartName>
+                <Bar/>
                     <div className="cart-details">
                         {!!this.state.products.length && this.state.products.map((cartProduct, index) => (
                             <div key={index} className="product-info-cart">
-                                <div className="information-box-cart">
+                                <InformationBoxCart>
                                     <div className="product-name-cart">{cartProduct.name}</div>
                                     <div className="product-brand-cart">{cartProduct.brand}</div>
                                     <div className="price-cart">{cartProduct.activePrice.currency.symbol}{cartProduct.activePrice.amount}</div>
@@ -82,7 +113,7 @@ class Cart extends Component {
                                             </div>
                                         )
                                     })}</div>
-                                </div>
+                                </InformationBoxCart>
                                 <div className="amount-changer-cart">
                                     <div className="increase-amount">
                                         <button onClick={() => this.amountChanger(cartProduct.choices, 1)} className="plus-button-cart">+</button>
@@ -106,7 +137,7 @@ class Cart extends Component {
                     <div className="total-cart">Total: <span className="total-result">{priceFormat(this.state.totalPrice, this.props.global.currency.symbol)}</span></div>
                 </div>
                 <button className="order">Order</button>
-            </div>
+            </Cart>
         )
     }
 }
