@@ -44,7 +44,7 @@ class Currencies extends Component {
             gap: 10px;
             padding: 0px 15px;
             transition: all 255ms;
-            $:hover {
+            &:hover {
                 background-color: #EEEEEE;
                 cursor: pointer;
             }
