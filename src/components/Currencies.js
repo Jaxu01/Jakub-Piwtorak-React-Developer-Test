@@ -2,6 +2,7 @@ import { Component } from "react"
 import { Query, client } from '@tilework/opus'
 import { ReactComponent as DropdownLogo} from "../dropdown.svg"
 import Dropdown from "./Dropdown.js"
+import styled from "styled-components"
 import "./Currencies.css"
 
 class Currencies extends Component {
@@ -34,18 +35,32 @@ class Currencies extends Component {
                 <DropdownLogo/>
             </div>
         )
+        const SectionRightCurrencies = styled.div`
+            box-shadow: 0px 4px 35px 0px rgba(168, 172, 176, 0.19);
+            z-index: 1;
+        `
+        const CurrencyDiv = styled.div`
+            display: flex;
+            gap: 10px;
+            padding: 0px 15px;
+            transition: all 255ms;
+            $:hover {
+                background-color: #EEEEEE;
+                cursor: pointer;
+            }
+        `
         return (
             <Dropdown className="currencies-dropdown" title={<DropdownTitle/>}>
-                <div className="section-right-currencies">
+                <SectionRightCurrencies>
                     <div className="currencies-container">
                         {this.state.currencies?.map((currency, index) => (
-                            <div key={index} onClick={() => this.changeCurrency(currency)} className="currency-div">
+                            <CurrencyDiv key={index} onClick={() => this.changeCurrency(currency)}>
                                 <p>{currency.symbol}</p>
                                 <p>{currency.label}</p>
-                            </div>
+                            </CurrencyDiv>
                         ))}
                     </div>
-                </div>
+                </SectionRightCurrencies>
             </Dropdown>
         )
     }
