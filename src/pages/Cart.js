@@ -53,8 +53,9 @@ class Cart extends Component {
 
     render() {
         const Cart = styled.div`
-            max-width: 100%;
-            margin: 100px;
+            max-width: 1240px;
+            margin: auto;
+            padding: 0 40px;
         `
         const CartName = styled.div`
             font-family: 'Raleway';

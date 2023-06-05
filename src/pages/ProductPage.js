@@ -67,11 +67,12 @@ class ProductPage extends Component {
     render() {
         const ProductView = styled.div`
             display: grid;
-            grid-template-columns: 1fr 5fr 2fr;
+            grid-template-columns: auto auto 2fr;
             font-family: 'Raleway';
             max-width: 1240px;
             margin: 0 auto;
-            grid-gap: 20px;
+            grid-gap: 40px;
+            padding: 0 40px;
         `
         const ProductInfo = styled.div`
             padding: 0 100px 0 0;

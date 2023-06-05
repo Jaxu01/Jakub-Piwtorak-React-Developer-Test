@@ -7,6 +7,7 @@ nav {
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     max-width: 1240px;
+    padding: 0 40px;
 }
 
   .tab-button {
